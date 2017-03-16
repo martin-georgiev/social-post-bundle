@@ -1,0 +1,31 @@
+{
+    "name": "martin-georgiev/social-post-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony 3 bundle for simultaneous posting of status update to Facebook (acting as a page) and Twitter",
+    "keywords": ["martin georgiev", "symfony3", "bundle", "facebook", "twitter", "twitteroauth", "facabook sdk for php", "post update", "social network"],
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Georgiev",
+            "email": "martin.georgiev@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "abraham/twitteroauth": "^0.7",
+        "facebook/graph-sdk": "^5.4",
+        "symfony/framework-bundle": "^3.0",
+        "symfony/yaml": "^3.0"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^3.0",
+        "phpunit/phpunit": "^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "MartinGeorgiev\\": "src/MartinGeorgiev/",
+            "MartinGeorgiev\\Tests\\": "tests/MartinGeorgiev/"
+        }
+    }
+}
