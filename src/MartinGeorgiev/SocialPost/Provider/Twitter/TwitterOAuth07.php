@@ -13,7 +13,7 @@ use Throwable;
  * Provider for publishing on a Twitter page.
  * Uses TwitterOAuth v0.7
  * @see https://github.com/abraham/twitteroauth
- * 
+ *
  * @since 1.0.0
  * @author Martin Georgiev <martin.georgiev@gmail.com>
  * @license https://opensource.org/licenses/MIT MIT
@@ -30,14 +30,14 @@ class TwitterOAuth07 implements SocialNetworkPublisher
      * @param TwitterOAuth $twitter Ready to use instance of TwitterOAuth
      */
     public function __construct(TwitterOAuth $twitter)
-	{
+    {
         $this->twitter = $twitter;
-	}
+    }
 
     /**
      * {@inheritdoc}
      */
-	public function publish(
+    public function publish(
         string $message,
         string $link = '',
         string $pictureLink = '',
@@ -48,7 +48,6 @@ class TwitterOAuth07 implements SocialNetworkPublisher
             $post = $this->twitter->post('statuses/update', ['status' => $message, 'trim_user' => true]);
 
             return !empty($post->id_str);
-            
         } catch (Throwable $t) {
             throw new FailureWhenPublishingSocialPost($t);
         }

@@ -13,7 +13,7 @@ use Throwable;
  * Provider for publishing on a Facebook page.
  * Uses Facebook PHP SDK v5.
  * @see https://developers.facebook.com/docs/php/Facebook/5.0.0
- * 
+ *
  * @since 1.0.0
  * @author Martin Georgiev <martin.georgiev@gmail.com>
  * @license https://opensource.org/licenses/MIT MIT
@@ -36,15 +36,15 @@ class SDK5 implements SocialNetworkPublisher
      * @param string $pageId Identifier of the page, on which the post will be published
      */
     public function __construct(Facebook $facebook, string $pageId)
-	{
+    {
         $this->facebook = $facebook;
         $this->pageId = $pageId;
-	}
+    }
 
     /**
      * {@inheritdoc}
      */
-	public function publish(
+    public function publish(
         string $message,
         string $link = '',
         string $pictureLink = '',
@@ -53,11 +53,13 @@ class SDK5 implements SocialNetworkPublisher
     ): bool {
         try {
             $publishPostEndpoint = '/' . $this->pageId. '/feed';
-            $response = $this->facebook->post($publishPostEndpoint, $this->prepareParams($message, $link, $pictureLink, $caption, $description));
+            $response = $this->facebook->post(
+                $publishPostEndpoint,
+                $this->prepareParams($message, $link, $pictureLink, $caption, $description)
+            );
             $post = $response->getGraphNode();
 
             return !empty($post['id']);
-            
         } catch (Throwable $t) {
             throw new FailureWhenPublishingSocialPost($t);
         }

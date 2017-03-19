@@ -10,7 +10,7 @@ use Throwable;
 
 /**
  * Publish simultaneously to all configured social networks
- * 
+ *
  * @since 1.0.0
  * @author Martin Georgiev <martin.georgiev@gmail.com>
  * @license https://opensource.org/licenses/MIT MIT
@@ -27,20 +27,21 @@ class AllInOne implements SocialNetworkPublisher
      * @param SocialNetworkPublisher[] $publishers List of instantiated SocialNetworkPublisher's
      */
     public function __construct(...$publishers)
-	{
+    {
         foreach ($publishers as $publisher) {
             if (!($publisher instanceof SocialNetworkPublisher)) {
-                throw new InvalidArgumentException(sprintf('At least one of the given publishers is not implementing %s', SocialNetworkPublisher::class));
+                $message = sprintf('At least one of the given publishers is not implementing %s', SocialNetworkPublisher::class);
+                throw new InvalidArgumentException($message);
             }
 
             $this->publishers[] = $publisher;
         }
-	}
+    }
 
     /**
      * {@inheritdoc}
      */
-	public function publish(
+    public function publish(
         string $message,
         string $link = '',
         string $pictureLink = '',
@@ -54,7 +55,6 @@ class AllInOne implements SocialNetworkPublisher
             }
 
             return (bool)$allPublished;
-            
         } catch (Throwable $t) {
             throw new FailureWhenPublishingSocialPost($t);
         }
