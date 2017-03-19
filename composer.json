@@ -20,7 +20,8 @@
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",
-        "phpunit/phpunit": "^5.0"
+        "phpunit/phpunit": "^5.0",
+        "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
         "psr-4": {
