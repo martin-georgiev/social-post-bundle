@@ -28,5 +28,14 @@
             "MartinGeorgiev\\": "src/MartinGeorgiev/",
             "MartinGeorgiev\\Tests\\": "tests/MartinGeorgiev/"
         }
+    },
+    "scripts": {
+        "check-code": [
+            "vendor/bin/phpunit",
+            "vendor/bin/phpcs --standard=PSR2 --encoding=utf-8 --colors -n src"
+        ],
+        "fix-code": [
+            "vendor/bin/phpcbf --standard=PSR2 --encoding=utf-8 -n src"
+        ]
     }
 }

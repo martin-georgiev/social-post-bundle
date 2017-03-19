@@ -4,5 +4,4 @@ php:
   - '7.1'
 install: composer install
 script:
-  - vendor/bin/phpunit
-  - vendor/bin/phpcs --standard=PSR2 --encoding=utf-8 --colors -n src
+  - composer run-script check-code
