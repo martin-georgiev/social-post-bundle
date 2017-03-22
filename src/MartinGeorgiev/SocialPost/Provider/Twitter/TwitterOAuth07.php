@@ -45,11 +45,33 @@ class TwitterOAuth07 implements SocialNetworkPublisher
         string $description = ''
     ): bool {
         try {
-            $post = $this->twitter->post('statuses/update', ['status' => $message, 'trim_user' => true]);
+            $status = $this->prepareStatus($message, $link);
+            $post = $this->twitter->post('statuses/update', ['status' => $status, 'trim_user' => true]);
 
             return !empty($post->id_str);
         } catch (Throwable $t) {
             throw new FailureWhenPublishingSocialPost($t);
         }
+    }
+
+    /**
+     * @param string $message
+     * @param string $link
+     * @return string
+     */
+    protected function prepareStatus(
+        string $message,
+        string $link
+    ): string {
+        $status = $message;
+
+        if (filter_var($link, FILTER_VALIDATE_URL) !== false) {
+            $linkIsNotPartOfTheMessage = mb_strpos($message, $link) === false;
+            if ($linkIsNotPartOfTheMessage) {
+                $status .= ' ' . $link;
+            }
+        }
+
+        return $status;
     }
 }
