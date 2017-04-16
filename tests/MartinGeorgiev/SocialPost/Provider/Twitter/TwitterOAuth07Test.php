@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\MartinGeorgiev\SocialPost\Provider\Twitter\TwitterOAuth07;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
+use MartinGeorgiev\SocialPost\Message\Twitter\Tweet;
 use MartinGeorgiev\SocialPost\Provider\Twitter\TwitterOAuth07;
 use PHPUnit_Framework_TestCase;
 
@@ -27,17 +28,18 @@ class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
             ->getMock();
 
         $message = 'test tweet';
+        $tweet = new Tweet($message);
         $endpoint = 'statuses/update';
         $data = ['status' => $message, 'trim_user' => true];
-        $tweet = (object)['id_str' => '2007'];
+        $twitterResponse = (object)['id_str' => '2007'];
         $twitterOAuth
             ->expects($this->once())
             ->method('post')
             ->with($endpoint, $data)
-            ->willReturn($tweet);
+            ->willReturn($twitterResponse);
 
         $twitterProvider = new TwitterOAuth07($twitterOAuth);
-        $this->assertTrue($twitterProvider->publish($message));
+        $this->assertTrue($twitterProvider->publish($tweet));
     }
 
     public function test_can_successfully_publish_a_tweet_with_a_link()
@@ -50,18 +52,19 @@ class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
 
         $message = 'test tweet';
         $link = 'https://www.example.com';
+        $tweet = new Tweet($message, $link);
         $endpoint = 'statuses/update';
         $status = $message . ' ' . $link;
         $data = ['status' => $status, 'trim_user' => true];
-        $tweet = (object)['id_str' => '2007'];
+        $twitterResponse = (object)['id_str' => '2007'];
         $twitterOAuth
             ->expects($this->once())
             ->method('post')
             ->with($endpoint, $data)
-            ->willReturn($tweet);
+            ->willReturn($twitterResponse);
 
         $twitterProvider = new TwitterOAuth07($twitterOAuth);
-        $this->assertTrue($twitterProvider->publish($message, $link));
+        $this->assertTrue($twitterProvider->publish($tweet));
     }
 
     public function test_will_fail_if_cannot_find_the_id_of_the_new_tweet()
@@ -73,17 +76,18 @@ class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
             ->getMock();
 
         $message = 'test tweet';
+        $tweet = new Tweet($message);
         $endpoint = 'statuses/update';
         $data = ['status' => $message, 'trim_user' => true];
-        $tweet = (object)['id_str' => ''];
+        $twitterResponse = (object)['id_str' => ''];
         $twitterOAuth
             ->expects($this->once())
             ->method('post')
             ->with($endpoint, $data)
-            ->willReturn($tweet);
+            ->willReturn($twitterResponse);
 
         $twitterProvider = new TwitterOAuth07($twitterOAuth);
-        $this->assertFalse($twitterProvider->publish($message));
+        $this->assertFalse($twitterProvider->publish($tweet));
     }
 
     /**
@@ -98,7 +102,8 @@ class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
             ->getMock();
 
         $message = 'test tweet';
+        $tweet = new Tweet($message);
         $twitterProvider = new TwitterOAuth07($twitterOAuth);
-        $twitterProvider->publish($message);
+        $twitterProvider->publish($tweet);
     }
 }

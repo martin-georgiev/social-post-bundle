@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace MartinGeorgiev\SocialPost\Provider\Twitter;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
+use MartinGeorgiev\SocialPost\Message\Message;
+use MartinGeorgiev\SocialPost\Message\Twitter\Tweet;
 use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingSocialPost;
 use MartinGeorgiev\SocialPost\Provider\SocialNetworkPublisher;
 use Throwable;
@@ -37,15 +39,10 @@ class TwitterOAuth07 implements SocialNetworkPublisher
     /**
      * {@inheritdoc}
      */
-    public function publish(
-        string $message,
-        string $link = '',
-        string $pictureLink = '',
-        string $caption = '',
-        string $description = ''
-    ): bool {
+    public function publish(Message $message): bool
+    {
         try {
-            $status = $this->prepareStatus($message, $link);
+            $status = $this->prepareStatus($message);
             $post = $this->twitter->post('statuses/update', ['status' => $status, 'trim_user' => true]);
 
             return !empty($post->id_str);
@@ -55,20 +52,17 @@ class TwitterOAuth07 implements SocialNetworkPublisher
     }
 
     /**
-     * @param string $message
-     * @param string $link
+     * @param Tweet $tweet
      * @return string
      */
-    protected function prepareStatus(
-        string $message,
-        string $link
-    ): string {
-        $status = $message;
+    protected function prepareStatus(Tweet $tweet): string
+    {
+        $status = $tweet->getMessage();
 
-        if (filter_var($link, FILTER_VALIDATE_URL) !== false) {
-            $linkIsNotPartOfTheMessage = mb_strpos($message, $link) === false;
-            if ($linkIsNotPartOfTheMessage) {
-                $status .= ' ' . $link;
+        if (filter_var($tweet->getLink(), FILTER_VALIDATE_URL) !== false) {
+            $linkIsNotIncludedInTheStatus = mb_strpos($status, $tweet->getLink()) === false;
+            if ($linkIsNotIncludedInTheStatus) {
+                $status .= ' ' . $tweet->getLink();
             }
         }
 

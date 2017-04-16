@@ -6,6 +6,7 @@ namespace Tests\MartinGeorgiev\SocialPost\Provider\Facebook\FacebookOAuth07;
 
 use Facebook\Facebook;
 use Facebook\FacebookResponse;
+use MartinGeorgiev\SocialPost\Message\Facebook\StatusUpdate;
 use MartinGeorgiev\SocialPost\Provider\Facebook\SDK5;
 use PHPUnit_Framework_TestCase;
 
@@ -40,8 +41,9 @@ class SDK5Test extends PHPUnit_Framework_TestCase
             ->getMock();
 
         $pageId = '2009';
-        $message = 'test status update';
         $endpoint = sprintf('/%s/feed', $pageId);
+        $message = 'test status update';
+        $statusUpdate = new StatusUpdate($message);
         $data = ['message' => $message];
         $facebook
             ->expects($this->once())
@@ -50,7 +52,7 @@ class SDK5Test extends PHPUnit_Framework_TestCase
             ->willReturn($facebookResponse);
 
         $facebookProvider = new SDK5($facebook, $pageId);
-        $this->assertTrue($facebookProvider->publish($message));
+        $this->assertTrue($facebookProvider->publish($statusUpdate));
     }
 
     public function test_will_fail_if_cannot_find_the_id_of_the_new_post()
@@ -74,8 +76,9 @@ class SDK5Test extends PHPUnit_Framework_TestCase
             ->getMock();
 
         $pageId = '2009';
-        $message = 'test status update';
         $endpoint = sprintf('/%s/feed', $pageId);
+        $message = 'test status update';
+        $statusUpdate = new StatusUpdate($message);
         $data = ['message' => $message];
         $facebook
             ->expects($this->once())
@@ -84,7 +87,7 @@ class SDK5Test extends PHPUnit_Framework_TestCase
             ->willReturn($facebookResponse);
 
         $facebookProvider = new SDK5($facebook, $pageId);
-        $this->assertFalse($facebookProvider->publish($message));
+        $this->assertFalse($facebookProvider->publish($statusUpdate));
     }
 
     /**
@@ -100,8 +103,9 @@ class SDK5Test extends PHPUnit_Framework_TestCase
 
         $pageId = '2009';
         $message = 'test status update';
+        $statusUpdate = new StatusUpdate($message);
 
         $facebookProvider = new SDK5($facebook, $pageId);
-        $facebookProvider->publish($message);
+        $facebookProvider->publish($statusUpdate);
     }
 }

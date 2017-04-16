@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MartinGeorgiev\SocialPost\Provider;
 
+use MartinGeorgiev\SocialPost\Message\Message;
+
 /**
  * Main contract for publishing a new public message at a social network account
  *
@@ -15,19 +17,9 @@ namespace MartinGeorgiev\SocialPost\Provider;
 interface SocialNetworkPublisher
 {
     /**
-     * @param string $message The message to post
-     * @param string $link Optional link to a webpage to display along the message
-     * @param string $pictureLink Optional address of a picture to display along the message
-     * @param string $caption Optional caption to display along the message
-     * @param string $description Optional description to display along the message
+     * @param Message $message An object implementing the Message interface
      * @return bool
      * @throws FailureWhenPublishingSocialPost
      */
-    public function publish(
-        string $message,
-        string $link = '',
-        string $pictureLink = '',
-        string $caption = '',
-        string $description = ''
-    ): bool;
+    public function publish(Message $message): bool;
 }
