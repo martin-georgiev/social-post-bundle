@@ -41,17 +41,12 @@ class AllInOne implements SocialNetworkPublisher
     /**
      * {@inheritdoc}
      */
-    public function publish(
-        string $message,
-        string $link = '',
-        string $pictureLink = '',
-        string $caption = '',
-        string $description = ''
-    ): bool {
+    public function publish(Message $message): bool
+    {
         try {
             $allPublished = (int)true;
             foreach ($this->publishers as $publisher) {
-                $allPublished &= $publisher->publish($message, $link, $pictureLink, $caption, $description);
+                $allPublished &= $publisher->publish($message);
             }
 
             return (bool)$allPublished;

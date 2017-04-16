@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace MartinGeorgiev\SocialPost\Provider\Twitter;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
-use MartinGeorgiev\SocialPost\Message\Message;
-use MartinGeorgiev\SocialPost\Message\Twitter\Tweet;
 use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingSocialPost;
+use MartinGeorgiev\SocialPost\Provider\Message;
 use MartinGeorgiev\SocialPost\Provider\SocialNetworkPublisher;
 use Throwable;
 
@@ -52,17 +51,17 @@ class TwitterOAuth07 implements SocialNetworkPublisher
     }
 
     /**
-     * @param Tweet $tweet
+     * @param Message $message
      * @return string
      */
-    protected function prepareStatus(Tweet $tweet): string
+    protected function prepareStatus(Message $message): string
     {
-        $status = $tweet->getMessage();
+        $status = $message->getMessage();
 
-        if (filter_var($tweet->getLink(), FILTER_VALIDATE_URL) !== false) {
-            $linkIsNotIncludedInTheStatus = mb_strpos($status, $tweet->getLink()) === false;
+        if (filter_var($message->getLink(), FILTER_VALIDATE_URL) !== false) {
+            $linkIsNotIncludedInTheStatus = mb_strpos($status, $message->getLink()) === false;
             if ($linkIsNotIncludedInTheStatus) {
-                $status .= ' ' . $tweet->getLink();
+                $status .= ' ' . $message->getLink();
             }
         }
 

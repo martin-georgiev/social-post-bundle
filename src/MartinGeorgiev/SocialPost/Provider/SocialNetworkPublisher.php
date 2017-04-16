@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace MartinGeorgiev\SocialPost\Provider;
 
-use MartinGeorgiev\SocialPost\Message\Message;
-
 /**
  * Main contract for publishing a new public message at a social network account
  *
@@ -17,7 +15,7 @@ use MartinGeorgiev\SocialPost\Message\Message;
 interface SocialNetworkPublisher
 {
     /**
-     * @param Message $message An object implementing the Message interface
+     * @param Message $message
      * @return bool
      * @throws FailureWhenPublishingSocialPost
      */

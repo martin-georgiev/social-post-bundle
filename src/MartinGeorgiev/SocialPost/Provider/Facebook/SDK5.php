@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace MartinGeorgiev\SocialPost\Provider\Facebook;
 
 use Facebook\Facebook;
-use MartinGeorgiev\SocialPost\Message\Facebook\StatusUpdate;
-use MartinGeorgiev\SocialPost\Message\Message;
 use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingSocialPost;
+use MartinGeorgiev\SocialPost\Provider\Message;
 use MartinGeorgiev\SocialPost\Provider\SocialNetworkPublisher;
 use Throwable;
 
@@ -63,26 +62,26 @@ class SDK5 implements SocialNetworkPublisher
     }
 
     /**
-     * @param StatusUpdate $statusUpdate
+     * @param Message $message
      * @return array
      */
-    protected function prepareParams(StatusUpdate $statusUpdate): array
+    protected function prepareParams(Message $message): array
     {
         $params = [];
         
-        $params['message'] = $statusUpdate->getMessage();
+        $params['message'] = $message->getMessage();
 
-        if (filter_var($statusUpdate->getLink(), FILTER_VALIDATE_URL) !== false) {
-            $params['link'] = $statusUpdate->getLink();
+        if (filter_var($message->getLink(), FILTER_VALIDATE_URL) !== false) {
+            $params['link'] = $message->getLink();
         }
-        if (filter_var($statusUpdate->getPictureLink(), FILTER_VALIDATE_URL) !== false) {
-            $params['picture'] = $statusUpdate->getPictureLink();
+        if (filter_var($message->getPictureLink(), FILTER_VALIDATE_URL) !== false) {
+            $params['picture'] = $message->getPictureLink();
         }
-        if (!empty($statusUpdate->getCaption())) {
-            $params['caption'] = $statusUpdate->getCaption();
+        if (!empty($message->getCaption())) {
+            $params['caption'] = $message->getCaption();
         }
-        if (!empty($statusUpdate->getDescription())) {
-            $params['description'] = $statusUpdate->getDescription();
+        if (!empty($message->getDescription())) {
+            $params['description'] = $message->getDescription();
         }
 
         return $params;
