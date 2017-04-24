@@ -7,7 +7,7 @@ namespace Tests\MartinGeorgiev\SocialPost\Provider;
 use Exception;
 use MartinGeorgiev\SocialPost\Provider\AllInOne;
 use MartinGeorgiev\SocialPost\Provider\Facebook\SDK5;
-use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingSocialPost;
+use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingMessage;
 use MartinGeorgiev\SocialPost\Provider\Message;
 use MartinGeorgiev\SocialPost\Provider\Twitter\TwitterOAuth07;
 use PHPUnit_Framework_TestCase;
@@ -18,10 +18,24 @@ use PHPUnit_Framework_TestCase;
  * @license https://opensource.org/licenses/MIT MIT
  * @link https://github.com/martin-georgiev/social-post-bundle Package's homepage
  * 
- * @covers MartinGeorgiev\SocialPost\Provider
+ * @covers MartinGeorgiev\SocialPost\Provider\AllInOne
  */
 class AllInOneTest extends PHPUnit_Framework_TestCase
 {
+    public function test_can_publish_any_message()
+    {
+        $socialPost = 'test message';
+        $message = new Message($socialPost);
+
+        $facebook = $this
+            ->getMockBuilder(SDK5::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $allInOne = new AllInOne($facebook);
+        $this->assertTrue($allInOne->canPublish($message));
+    }
+
     public function test_can_successfully_publish_to_all_providers()
     {
         $socialPost = 'test message';
@@ -85,7 +99,7 @@ class AllInOneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingSocialPost
+     * @expectedException \MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingMessage
      */
     public function test_will_throw_an_exception_if_completly_fails_to_publish()
     {
@@ -103,7 +117,7 @@ class AllInOneTest extends PHPUnit_Framework_TestCase
             ->with($message)
             ->willReturn(true);
 
-        $exception = new FailureWhenPublishingSocialPost(new Exception('test exception'));
+        $exception = new FailureWhenPublishingMessage(new Exception('test exception'));
         $twitter = $this
             ->getMockBuilder(TwitterOAuth07::class)
             ->disableOriginalConstructor()

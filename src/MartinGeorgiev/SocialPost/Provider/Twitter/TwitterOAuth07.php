@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace MartinGeorgiev\SocialPost\Provider\Twitter;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
-use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingSocialPost;
+use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingMessage;
 use MartinGeorgiev\SocialPost\Provider\Message;
+use MartinGeorgiev\SocialPost\Provider\MessageNotIntendedForPublisher;
+use MartinGeorgiev\SocialPost\Provider\SocialNetwork;
 use MartinGeorgiev\SocialPost\Provider\SocialNetworkPublisher;
 use Throwable;
 
@@ -38,15 +40,28 @@ class TwitterOAuth07 implements SocialNetworkPublisher
     /**
      * {@inheritdoc}
      */
+    public function canPublish(Message $message): bool
+    {
+        $canPublish = !empty(array_intersect($message->getNetworksToPublishOn(), [SocialNetwork::ANY, SocialNetwork::TWITTER]));
+        return $canPublish;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function publish(Message $message): bool
     {
+        if (!$this->canPublish($message)) {
+            throw new MessageNotIntendedForPublisher(SocialNetwork::TWITTER);
+        }
+
         try {
             $status = $this->prepareStatus($message);
             $post = $this->twitter->post('statuses/update', ['status' => $status, 'trim_user' => true]);
 
             return !empty($post->id_str);
         } catch (Throwable $t) {
-            throw new FailureWhenPublishingSocialPost($t);
+            throw new FailureWhenPublishingMessage($t);
         }
     }
 
