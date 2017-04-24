@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace MartinGeorgiev\SocialPost\Provider\Facebook;
 
 use Facebook\Facebook;
-use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingSocialPost;
+use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingMessage;
 use MartinGeorgiev\SocialPost\Provider\Message;
+use MartinGeorgiev\SocialPost\Provider\MessageNotIntendedForPublisher;
+use MartinGeorgiev\SocialPost\Provider\SocialNetwork;
 use MartinGeorgiev\SocialPost\Provider\SocialNetworkPublisher;
 use Throwable;
 
@@ -45,8 +47,21 @@ class SDK5 implements SocialNetworkPublisher
     /**
      * {@inheritdoc}
      */
+    public function canPublish(Message $message): bool
+    {
+        $canPublish = !empty(array_intersect($message->getNetworksToPublishOn(), [SocialNetwork::ANY, SocialNetwork::FACEBOOK]));
+        return $canPublish;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function publish(Message $message): bool
     {
+        if (!$this->canPublish($message)) {
+            throw new MessageNotIntendedForPublisher(SocialNetwork::FACEBOOK);
+        }
+
         try {
             $publishPostEndpoint = '/' . $this->pageId. '/feed';
             $response = $this->facebook->post(
@@ -57,7 +72,7 @@ class SDK5 implements SocialNetworkPublisher
 
             return !empty($post['id']);
         } catch (Throwable $t) {
-            throw new FailureWhenPublishingSocialPost($t);
+            throw new FailureWhenPublishingMessage($t);
         }
     }
 

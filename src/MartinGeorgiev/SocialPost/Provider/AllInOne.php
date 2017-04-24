@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace MartinGeorgiev\SocialPost\Provider;
 
-use InvalidArgumentException;
-use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingSocialPost;
+use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingMessage;
 use Throwable;
 
 /**
@@ -24,18 +23,21 @@ class AllInOne implements SocialNetworkPublisher
     private $publishers = [];
 
     /**
-     * @param SocialNetworkPublisher[] $publishers List of instantiated SocialNetworkPublisher's
+     * @param SocialNetworkPublisher ...$publishers List of instantiated SocialNetworkPublisher's
      */
-    public function __construct(...$publishers)
+    public function __construct(SocialNetworkPublisher ...$publishers)
     {
         foreach ($publishers as $publisher) {
-            if (!($publisher instanceof SocialNetworkPublisher)) {
-                $message = sprintf('At least one of the given publishers is not implementing %s', SocialNetworkPublisher::class);
-                throw new InvalidArgumentException($message);
-            }
-
             $this->publishers[] = $publisher;
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function canPublish(Message $message): bool
+    {
+        return true;
     }
 
     /**
@@ -46,12 +48,14 @@ class AllInOne implements SocialNetworkPublisher
         try {
             $allPublished = (int)true;
             foreach ($this->publishers as $publisher) {
-                $allPublished &= $publisher->publish($message);
+                if ($publisher->canPublish($message)) {
+                    $allPublished &= $publisher->publish($message);
+                }
             }
 
             return (bool)$allPublished;
         } catch (Throwable $t) {
-            throw new FailureWhenPublishingSocialPost($t);
+            throw new FailureWhenPublishingMessage($t);
         }
     }
 }

@@ -15,8 +15,8 @@ use Symfony\Component\Yaml\Parser;
  * @license https://opensource.org/licenses/MIT MIT
  * @link https://github.com/martin-georgiev/social-post-bundle Package's homepage
  * 
- * @covers MartinGeorgiev\SocialPost\DependecyInjection\Configuration
- * @covers MartinGeorgiev\SocialPost\DependecyInjection\SocialPostExtension
+ * @covers MartinGeorgiev\SocialPost\DependencyInjection\Configuration
+ * @covers MartinGeorgiev\SocialPost\DependencyInjection\SocialPostExtension
  */
 class SocialPostExtensionTest extends PHPUnit_Framework_TestCase
 {
@@ -29,7 +29,16 @@ EOF;
         return (new Parser())->parse($yaml);
     }
 
-    private function getConfigurationWithEmptyProvider(): array
+    private function getConfigurationWithEmptyFacebookProvider(): array
+    {
+        $yaml = <<<EOF
+social_post:
+    publish_on: [facebook]
+EOF;
+        return (new Parser())->parse($yaml);
+    }
+
+    private function getConfigurationWithEmptyTwitterProvider(): array
     {
         $yaml = <<<EOF
 social_post:
@@ -109,13 +118,22 @@ EOF;
     /**
      * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
-    public function test_will_throw_an_exception_when_no_provider_is_given()
+    public function test_will_throw_an_exception_when_no_facebook_provider_is_given()
     {
         $extension = new SocialPostExtension();
-        $extension->load($this->getConfigurationWithEmptyProvider(), new ContainerBuilder());
+        $extension->load($this->getConfigurationWithEmptyFacebookProvider(), new ContainerBuilder());
     }
 
-    public function test_facebook_defaults_whit_minimal_configuration()
+    /**
+     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     */
+    public function test_will_throw_an_exception_when_no_twitter_provider_is_given()
+    {
+        $extension = new SocialPostExtension();
+        $extension->load($this->getConfigurationWithEmptyTwitterProvider(), new ContainerBuilder());
+    }
+
+    public function test_facebook_defaults_with_minimal_configuration()
     {
         $configs = $this->getMinimalConfiguration();
         $containerBuilder = new ContainerBuilder();

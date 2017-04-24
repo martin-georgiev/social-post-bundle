@@ -40,6 +40,12 @@ class Message
     private $description;
 
     /**
+     * @var array
+     * @see SocialNetwork::ANY List of available networks
+     */
+    private $networksToPublishOn = [SocialNetwork::ANY];
+
+    /**
      * @param string $message The main message
      * @param string $link Optional link to a webpage to display along the message
      * @param string $pictureLink Optional address of a picture to display along the message
@@ -98,5 +104,23 @@ class Message
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    /**
+     * @return Message
+     */
+    public function setNetworksToPublishOn(array $networksToPublishOn): Message
+    {
+        $this->networksToPublishOn = $networksToPublishOn;
+        
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getNetworksToPublishOn(): array
+    {
+        return $this->networksToPublishOn;
     }
 }

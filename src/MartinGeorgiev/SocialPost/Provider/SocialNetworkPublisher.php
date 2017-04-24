@@ -15,9 +15,20 @@ namespace MartinGeorgiev\SocialPost\Provider;
 interface SocialNetworkPublisher
 {
     /**
+     * Tests if a message can be published with a network.
+     *
      * @param Message $message
      * @return bool
-     * @throws FailureWhenPublishingSocialPost
+     */
+    public function canPublish(Message $message): bool;
+
+    /**
+     * Publishes a message to a network.
+     *
+     * @param Message $message
+     * @return bool
+     * @throws MessageNotIntendedForPublisher
+     * @throws FailureWhenPublishingMessage
      */
     public function publish(Message $message): bool;
 }
