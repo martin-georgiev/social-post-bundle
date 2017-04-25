@@ -38,6 +38,15 @@ EOF;
         return (new Parser())->parse($yaml);
     }
 
+    private function getConfigurationWithEmptyLinkedInProvider(): array
+    {
+        $yaml = <<<EOF
+social_post:
+    publish_on: [linkedin]
+EOF;
+        return (new Parser())->parse($yaml);
+    }
+
     private function getConfigurationWithEmptyTwitterProvider(): array
     {
         $yaml = <<<EOF
@@ -51,13 +60,17 @@ EOF;
     {
         $yaml = <<<EOF
 social_post:
-    publish_on: [facebook, twitter]
+    publish_on: [facebook, linkedin, twitter]
     providers:
         facebook:
             app_id: "2017"
             app_secret: "some-secret"
             default_access_token: "some-access-token"
             page_id: "681"
+        linkedin:
+            client_id: "2017"
+            client_secret: "some-secret"
+            company_page_id: "1878"
         twitter:
             consumer_key: "some-consumer-key"
             consumer_secret: "some-consumer-secret"
@@ -71,7 +84,7 @@ EOF;
     {
         $yaml = <<<EOF
 social_post:
-    publish_on: [facebook, twitter]
+    publish_on: [facebook, linkedin, twitter]
     providers:
         facebook:
             app_id: "2017"
@@ -83,6 +96,10 @@ social_post:
             persistent_data_handler: "session"
             pseudo_random_string_generator: "mcrypt"
             http_client_handler: "guzzle"
+        linkedin:
+            client_id: "2017"
+            client_secret: "some-secret"
+            company_page_id: "1878"
         twitter:
             consumer_key: "some-consumer-key"
             consumer_secret: "some-consumer-secret"
@@ -127,6 +144,15 @@ EOF;
     /**
      * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
+    public function test_will_throw_an_exception_when_no_linkedin_provider_is_given()
+    {
+        $extension = new SocialPostExtension();
+        $extension->load($this->getConfigurationWithEmptyLinkedInProvider(), new ContainerBuilder());
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     */
     public function test_will_throw_an_exception_when_no_twitter_provider_is_given()
     {
         $extension = new SocialPostExtension();
@@ -165,6 +191,9 @@ EOF;
         $this->assertContainerParameter($configs['social_post']['publish_on'], 'social_post.configuration.publish_on', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['facebook'], 'social_post.configuration.facebook', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['facebook']['page_id'], 'social_post.configuration.facebook.page_id', $containerBuilder);
+        $this->assertContainerParameter($configs['social_post']['providers']['linkedin']['client_id'], 'social_post.configuration.linkedin.client_id', $containerBuilder);
+        $this->assertContainerParameter($configs['social_post']['providers']['linkedin']['client_secret'], 'social_post.configuration.linkedin.client_secret', $containerBuilder);
+        $this->assertContainerParameter($configs['social_post']['providers']['linkedin']['company_page_id'], 'social_post.configuration.linkedin.company_page_id', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['twitter']['consumer_key'], 'social_post.configuration.twitter.consumer_key', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['twitter']['consumer_secret'], 'social_post.configuration.twitter.consumer_secret', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['twitter']['access_token'], 'social_post.configuration.twitter.access_token', $containerBuilder);

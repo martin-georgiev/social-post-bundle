@@ -30,7 +30,7 @@ class SocialPostExtension extends Extension
         $container->setParameter('social_post.configuration.publish_on', $configuration['publish_on']);
 
         $this->setFacebookParameters($configuration, $container);
-        
+        $this->setLinkedInParameters($configuration, $container);
         $this->setTwitterParameters($configuration, $container);
     }
 
@@ -52,6 +52,28 @@ class SocialPostExtension extends Extension
         $facebookConfiguration = $configuration['providers']['facebook'];
         $container->setParameter('social_post.configuration.facebook', $facebookConfiguration);
         $container->setParameter('social_post.configuration.facebook.page_id', $facebookConfiguration['page_id']);
+    }
+
+    /**
+     * @param array $configuration
+     * @param ContainerBuilder $container
+     * @throws InvalidConfigurationException
+     */
+    private function setLinkedInParameters(array $configuration, ContainerBuilder $container)
+    {
+        if (!in_array('linkedin', $configuration['publish_on'])) {
+            return;
+        }
+
+        if (!isset($configuration['providers']['linkedin'])) {
+            throw new InvalidConfigurationException('Found no configuration for the LinkedIn provider');
+        }
+
+        $linkedinConfiguration = $configuration['providers']['linkedin'];
+        $linkedinParameters = ['client_id', 'client_secret', 'company_page_id'];
+        foreach ($linkedinParameters as $parameter) {
+            $container->setParameter('social_post.configuration.linkedin.' . $parameter, $linkedinConfiguration[$parameter]);
+        }
     }
 
     /**

@@ -36,7 +36,7 @@ class SDK5 implements SocialNetworkPublisher
 
     /**
      * @param Facebook $facebook Ready to use instance of the Facebook PHP SDK
-     * @param string $pageId Identifier of the page, on which the post will be published
+     * @param string $pageId Identifier of the page, on which the status update will be published
      */
     public function __construct(Facebook $facebook, string $pageId)
     {
