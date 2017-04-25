@@ -1,6 +1,6 @@
 parameters:
     social_post.facebook.provider: MartinGeorgiev\SocialPost\Provider\Facebook\SDK5
-    social_post.linkedin.provider: MartinGeorgiev\SocialPost\Provider\Linkedin\HappyrLinkedInApiClient
+    social_post.linkedin.provider: MartinGeorgiev\SocialPost\Provider\LinkedIn\HappyrLinkedInApiClient
     social_post.twitter.provider: MartinGeorgiev\SocialPost\Provider\Twitter\TwitterOAuth07
     social_post.all_in_one: MartinGeorgiev\SocialPost\Provider\AllInOne
 
