@@ -70,7 +70,7 @@ class SDK5 implements SocialNetworkPublisher
             );
             $post = $response->getGraphNode();
 
-            return !empty($post['id']);
+            return isset($post['id']) ? !empty($post['id']) : false;
         } catch (Throwable $t) {
             throw new FailureWhenPublishingMessage($t);
         }
