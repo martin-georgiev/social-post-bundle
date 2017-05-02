@@ -1,5 +1,6 @@
 parameters:
     social_post.facebook.provider: MartinGeorgiev\SocialPost\Provider\Facebook\SDK5
+    social_post.linkedin.provider: MartinGeorgiev\SocialPost\Provider\LinkedIn\HappyrLinkedInApiClient
     social_post.twitter.provider: MartinGeorgiev\SocialPost\Provider\Twitter\TwitterOAuth07
     social_post.all_in_one: MartinGeorgiev\SocialPost\Provider\AllInOne
 
@@ -8,6 +9,13 @@ services:
         class: Facebook\Facebook
         arguments:
             - "%social_post.configuration.facebook%"
+        public: false
+        
+    linkedin:
+        class: Happyr\LinkedIn\LinkedIn
+        arguments:
+            - "%social_post.configuration.linkedin.client_id%"
+            - "%social_post.configuration.linkedin.client_secret%"
         public: false
         
     twitter:
@@ -24,6 +32,14 @@ services:
         arguments:
             - "@facebook"
             - "%social_post.configuration.facebook.page_id%"
+        public: false
+        
+    social_post.linkedin:
+        class: "%social_post.linkedin.provider%"
+        arguments:
+            - "@linkedin"
+            - "%social_post.configuration.linkedin.access_token%"
+            - "%social_post.configuration.linkedin.company_page_id%"
         public: false
     
     social_post.twitter:

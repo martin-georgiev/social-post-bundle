@@ -18,7 +18,7 @@ Recommended way is through [Composer](https://getcomposer.org/download/)
 
     # Usually part of config.yml
     social_post:
-        publish_on: [facebook, twitter]                  # List which Social networks you will be publishing to and configure your access to them as shown below
+        publish_on: [facebook, twitter]                   # List which Social networks you will be publishing to and configure your access to them as shown below
         providers:
             facebook:
                 app_id: "YOUR-FACEBOOK-APP-ID"

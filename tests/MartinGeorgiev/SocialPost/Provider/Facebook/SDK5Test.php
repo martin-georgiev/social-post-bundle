@@ -77,6 +77,9 @@ class SDK5Test extends PHPUnit_Framework_TestCase
     
     public function test_can_successfully_publish_as_a_page()
     {
+        $pageId = '2009';
+        $endpoint = sprintf('/%s/feed', $pageId);
+
         $facebookResponse = $this
             ->getMockBuilder(FacebookResponse::class)
             ->disableOriginalConstructor()
@@ -95,8 +98,6 @@ class SDK5Test extends PHPUnit_Framework_TestCase
             ->setMethods(['post'])
             ->getMock();
 
-        $pageId = '2009';
-        $endpoint = sprintf('/%s/feed', $pageId);
         $statusUpdate = 'test status update';
         $link = 'https://www.example.com';
         $pictureLink = 'https://www.example.com/logo.svg';
@@ -116,6 +117,9 @@ class SDK5Test extends PHPUnit_Framework_TestCase
 
     public function test_will_fail_if_cannot_find_the_id_of_the_new_post()
     {
+        $pageId = '2009';
+        $endpoint = sprintf('/%s/feed', $pageId);
+        
         $facebookResponse = $this
             ->getMockBuilder(FacebookResponse::class)
             ->disableOriginalConstructor()
@@ -133,9 +137,7 @@ class SDK5Test extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['post'])
             ->getMock();
-
-        $pageId = '2009';
-        $endpoint = sprintf('/%s/feed', $pageId);
+        
         $statusUpdate = 'test status update';
         $message = new Message($statusUpdate);
         $data = ['message' => $statusUpdate];
@@ -154,13 +156,13 @@ class SDK5Test extends PHPUnit_Framework_TestCase
      */
     public function test_will_throw_an_exception_if_completly_fails_to_publish()
     {
+        $pageId = '2009';
         $facebook = $this
             ->getMockBuilder(Facebook::class)
             ->disableOriginalConstructor()
             ->setMethods()
             ->getMock();
-
-        $pageId = '2009';
+        
         $statusUpdate = 'test status update';
         $message = new Message($statusUpdate);
 

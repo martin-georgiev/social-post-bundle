@@ -12,11 +12,14 @@
         }
     ],
     "require": {
-        "php": ">=7.0",
+        "php": "^7.0",
+        "ext-curl": "*",
+        "symfony/framework-bundle": "^3.0",
+        "symfony/yaml": "^3.0",
+        "php-http/curl-client": "^1.7",
         "abraham/twitteroauth": "^0.7",
         "facebook/graph-sdk": "^5.4",
-        "symfony/framework-bundle": "^3.0",
-        "symfony/yaml": "^3.0"
+        "happyr/linkedin-api-client": "^1.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",

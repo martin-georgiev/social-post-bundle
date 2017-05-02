@@ -27,5 +27,10 @@ class SocialNetwork
     /**
      * @var string
      */
+    const LINKEDIN = 'linkedin';
+
+    /**
+     * @var string
+     */
     const TWITTER = 'twitter';
 }

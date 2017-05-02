@@ -81,6 +81,7 @@ class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
 
         $tweet = 'test tweet';
         $message = new Message($tweet);
+        
         $endpoint = 'statuses/update';
         $data = ['status' => $tweet, 'trim_user' => true];
         $twitterResponse = (object)['id_str' => '2007'];
@@ -105,6 +106,7 @@ class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
         $tweet = 'test tweet';
         $link = 'https://www.example.com';
         $message = new Message($tweet, $link);
+        
         $endpoint = 'statuses/update';
         $status = $tweet . ' ' . $link;
         $data = ['status' => $status, 'trim_user' => true];
@@ -129,6 +131,7 @@ class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
 
         $tweet = 'test tweet';
         $message = new Message($tweet);
+        
         $endpoint = 'statuses/update';
         $data = ['status' => $tweet, 'trim_user' => true];
         $twitterResponse = (object)['id_str' => ''];
@@ -155,6 +158,7 @@ class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
 
         $tweet = 'test tweet';
         $message = new Message($tweet);
+        
         $twitterProvider = new TwitterOAuth07($twitterOAuth);
         $twitterProvider->publish($message);
     }
