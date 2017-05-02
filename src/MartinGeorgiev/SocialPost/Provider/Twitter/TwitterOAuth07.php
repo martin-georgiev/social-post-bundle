@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace MartinGeorgiev\SocialPost\Provider\Twitter;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
-use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingSocialPost;
+use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingMessage;
+use MartinGeorgiev\SocialPost\Provider\Message;
+use MartinGeorgiev\SocialPost\Provider\MessageNotIntendedForPublisher;
+use MartinGeorgiev\SocialPost\Provider\SocialNetwork;
 use MartinGeorgiev\SocialPost\Provider\SocialNetworkPublisher;
 use Throwable;
 
@@ -37,38 +40,43 @@ class TwitterOAuth07 implements SocialNetworkPublisher
     /**
      * {@inheritdoc}
      */
-    public function publish(
-        string $message,
-        string $link = '',
-        string $pictureLink = '',
-        string $caption = '',
-        string $description = ''
-    ): bool {
+    public function canPublish(Message $message): bool
+    {
+        $canPublish = !empty(array_intersect($message->getNetworksToPublishOn(), [SocialNetwork::ANY, SocialNetwork::TWITTER]));
+        return $canPublish;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function publish(Message $message): bool
+    {
+        if (!$this->canPublish($message)) {
+            throw new MessageNotIntendedForPublisher(SocialNetwork::TWITTER);
+        }
+
         try {
-            $status = $this->prepareStatus($message, $link);
+            $status = $this->prepareStatus($message);
             $post = $this->twitter->post('statuses/update', ['status' => $status, 'trim_user' => true]);
 
             return !empty($post->id_str);
         } catch (Throwable $t) {
-            throw new FailureWhenPublishingSocialPost($t);
+            throw new FailureWhenPublishingMessage($t);
         }
     }
 
     /**
-     * @param string $message
-     * @param string $link
+     * @param Message $message
      * @return string
      */
-    protected function prepareStatus(
-        string $message,
-        string $link
-    ): string {
-        $status = $message;
+    protected function prepareStatus(Message $message): string
+    {
+        $status = $message->getMessage();
 
-        if (filter_var($link, FILTER_VALIDATE_URL) !== false) {
-            $linkIsNotPartOfTheMessage = mb_strpos($message, $link) === false;
-            if ($linkIsNotPartOfTheMessage) {
-                $status .= ' ' . $link;
+        if (filter_var($message->getLink(), FILTER_VALIDATE_URL) !== false) {
+            $linkIsNotIncludedInTheStatus = mb_strpos($status, $message->getLink()) === false;
+            if ($linkIsNotIncludedInTheStatus) {
+                $status .= ' ' . $message->getLink();
             }
         }
 

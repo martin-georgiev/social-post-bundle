@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace MartinGeorgiev\SocialPost\Provider;
 
-use InvalidArgumentException;
-use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingSocialPost;
+use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingMessage;
 use Throwable;
 
 /**
@@ -24,16 +23,11 @@ class AllInOne implements SocialNetworkPublisher
     private $publishers = [];
 
     /**
-     * @param SocialNetworkPublisher[] $publishers List of instantiated SocialNetworkPublisher's
+     * @param SocialNetworkPublisher ...$publishers List of instantiated SocialNetworkPublisher's
      */
-    public function __construct(...$publishers)
+    public function __construct(SocialNetworkPublisher ...$publishers)
     {
         foreach ($publishers as $publisher) {
-            if (!($publisher instanceof SocialNetworkPublisher)) {
-                $message = sprintf('At least one of the given publishers is not implementing %s', SocialNetworkPublisher::class);
-                throw new InvalidArgumentException($message);
-            }
-
             $this->publishers[] = $publisher;
         }
     }
@@ -41,22 +35,27 @@ class AllInOne implements SocialNetworkPublisher
     /**
      * {@inheritdoc}
      */
-    public function publish(
-        string $message,
-        string $link = '',
-        string $pictureLink = '',
-        string $caption = '',
-        string $description = ''
-    ): bool {
+    public function canPublish(Message $message): bool
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function publish(Message $message): bool
+    {
         try {
             $allPublished = (int)true;
             foreach ($this->publishers as $publisher) {
-                $allPublished &= $publisher->publish($message, $link, $pictureLink, $caption, $description);
+                if ($publisher->canPublish($message)) {
+                    $allPublished &= $publisher->publish($message);
+                }
             }
 
             return (bool)$allPublished;
         } catch (Throwable $t) {
-            throw new FailureWhenPublishingSocialPost($t);
+            throw new FailureWhenPublishingMessage($t);
         }
     }
 }

@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\MartinGeorgiev\SocialPost\Provider\Twitter\TwitterOAuth07;
+namespace Tests\MartinGeorgiev\SocialPost\Provider\Twitter;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
+use MartinGeorgiev\SocialPost\Provider\Message;
+use MartinGeorgiev\SocialPost\Provider\SocialNetwork;
 use MartinGeorgiev\SocialPost\Provider\Twitter\TwitterOAuth07;
 use PHPUnit_Framework_TestCase;
 
@@ -18,6 +20,57 @@ use PHPUnit_Framework_TestCase;
  */
 class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
 {
+    public function test_can_publish_only_twitter_intended_messages()
+    {
+        $twitterOAuth = $this
+            ->getMockBuilder(TwitterOAuth::class)
+            ->disableOriginalConstructor()
+            ->setMethods()
+            ->getMock();
+
+        $tweet = 'test message';
+        $message = new Message($tweet);
+        $message->setNetworksToPublishOn([SocialNetwork::TWITTER]);
+
+        $twitterProvider = new TwitterOAuth07($twitterOAuth);
+        $this->assertTrue($twitterProvider->canPublish($message));
+    }
+
+    public function test_cannot_publish_when_message_not_intended_for_twitter()
+    {
+        $twitterOAuth = $this
+            ->getMockBuilder(TwitterOAuth::class)
+            ->disableOriginalConstructor()
+            ->setMethods()
+            ->getMock();
+
+        $tweet = 'test message';
+        $message = new Message($tweet);
+        $message->setNetworksToPublishOn([SocialNetwork::FACEBOOK]);
+
+        $twitterProvider = new TwitterOAuth07($twitterOAuth);
+        $this->assertFalse($twitterProvider->canPublish($message));
+    }
+
+    /**
+     * @expectedException \MartinGeorgiev\SocialPost\Provider\MessageNotIntendedForPublisher
+     */
+    public function test_will_throw_an_exception_when_publishing_if_message_is_not_intended_for_twitter()
+    {
+        $twitterOAuth = $this
+            ->getMockBuilder(TwitterOAuth::class)
+            ->disableOriginalConstructor()
+            ->setMethods()
+            ->getMock();
+
+        $tweet = 'test message';
+        $message = new Message($tweet);
+        $message->setNetworksToPublishOn([SocialNetwork::FACEBOOK]);
+
+        $twitterProvider = new TwitterOAuth07($twitterOAuth);
+        $twitterProvider->publish($message);
+    }
+    
     public function test_can_successfully_publish_a_tweet()
     {
         $twitterOAuth = $this
@@ -26,15 +79,17 @@ class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
             ->setMethods(['post'])
             ->getMock();
 
-        $message = 'test tweet';
+        $tweet = 'test tweet';
+        $message = new Message($tweet);
+        
         $endpoint = 'statuses/update';
-        $data = ['status' => $message, 'trim_user' => true];
-        $tweet = (object)['id_str' => '2007'];
+        $data = ['status' => $tweet, 'trim_user' => true];
+        $twitterResponse = (object)['id_str' => '2007'];
         $twitterOAuth
             ->expects($this->once())
             ->method('post')
             ->with($endpoint, $data)
-            ->willReturn($tweet);
+            ->willReturn($twitterResponse);
 
         $twitterProvider = new TwitterOAuth07($twitterOAuth);
         $this->assertTrue($twitterProvider->publish($message));
@@ -48,20 +103,22 @@ class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
             ->setMethods(['post'])
             ->getMock();
 
-        $message = 'test tweet';
+        $tweet = 'test tweet';
         $link = 'https://www.example.com';
+        $message = new Message($tweet, $link);
+        
         $endpoint = 'statuses/update';
-        $status = $message . ' ' . $link;
+        $status = $tweet . ' ' . $link;
         $data = ['status' => $status, 'trim_user' => true];
-        $tweet = (object)['id_str' => '2007'];
+        $twitterResponse = (object)['id_str' => '2007'];
         $twitterOAuth
             ->expects($this->once())
             ->method('post')
             ->with($endpoint, $data)
-            ->willReturn($tweet);
+            ->willReturn($twitterResponse);
 
         $twitterProvider = new TwitterOAuth07($twitterOAuth);
-        $this->assertTrue($twitterProvider->publish($message, $link));
+        $this->assertTrue($twitterProvider->publish($message));
     }
 
     public function test_will_fail_if_cannot_find_the_id_of_the_new_tweet()
@@ -72,22 +129,24 @@ class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
             ->setMethods(['post'])
             ->getMock();
 
-        $message = 'test tweet';
+        $tweet = 'test tweet';
+        $message = new Message($tweet);
+        
         $endpoint = 'statuses/update';
-        $data = ['status' => $message, 'trim_user' => true];
-        $tweet = (object)['id_str' => ''];
+        $data = ['status' => $tweet, 'trim_user' => true];
+        $twitterResponse = (object)['id_str' => ''];
         $twitterOAuth
             ->expects($this->once())
             ->method('post')
             ->with($endpoint, $data)
-            ->willReturn($tweet);
+            ->willReturn($twitterResponse);
 
         $twitterProvider = new TwitterOAuth07($twitterOAuth);
         $this->assertFalse($twitterProvider->publish($message));
     }
 
     /**
-     * @expectedException \MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingSocialPost
+     * @expectedException \MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingMessage
      */
     public function test_will_throw_an_exception_if_completly_fails_to_publish()
     {
@@ -97,7 +156,9 @@ class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
             ->setMethods()
             ->getMock();
 
-        $message = 'test tweet';
+        $tweet = 'test tweet';
+        $message = new Message($tweet);
+        
         $twitterProvider = new TwitterOAuth07($twitterOAuth);
         $twitterProvider->publish($message);
     }

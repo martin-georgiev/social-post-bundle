@@ -15,19 +15,20 @@ namespace MartinGeorgiev\SocialPost\Provider;
 interface SocialNetworkPublisher
 {
     /**
-     * @param string $message The message to post
-     * @param string $link Optional link to a webpage to display along the message
-     * @param string $pictureLink Optional address of a picture to display along the message
-     * @param string $caption Optional caption to display along the message
-     * @param string $description Optional description to display along the message
+     * Tests if a message can be published with a network.
+     *
+     * @param Message $message
      * @return bool
-     * @throws FailureWhenPublishingSocialPost
      */
-    public function publish(
-        string $message,
-        string $link = '',
-        string $pictureLink = '',
-        string $caption = '',
-        string $description = ''
-    ): bool;
+    public function canPublish(Message $message): bool;
+
+    /**
+     * Publishes a message to a network.
+     *
+     * @param Message $message
+     * @return bool
+     * @throws MessageNotIntendedForPublisher
+     * @throws FailureWhenPublishingMessage
+     */
+    public function publish(Message $message): bool;
 }
