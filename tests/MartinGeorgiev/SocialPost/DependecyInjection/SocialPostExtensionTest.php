@@ -70,6 +70,7 @@ social_post:
         linkedin:
             client_id: "2017"
             client_secret: "some-secret"
+            access_token: "some-access-token"
             company_page_id: "1878"
         twitter:
             consumer_key: "some-consumer-key"
@@ -99,6 +100,7 @@ social_post:
         linkedin:
             client_id: "2017"
             client_secret: "some-secret"
+            access_token: "some-access-token"
             company_page_id: "1878"
         twitter:
             consumer_key: "some-consumer-key"
@@ -193,6 +195,7 @@ EOF;
         $this->assertContainerParameter($configs['social_post']['providers']['facebook']['page_id'], 'social_post.configuration.facebook.page_id', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['linkedin']['client_id'], 'social_post.configuration.linkedin.client_id', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['linkedin']['client_secret'], 'social_post.configuration.linkedin.client_secret', $containerBuilder);
+        $this->assertContainerParameter($configs['social_post']['providers']['linkedin']['access_token'], 'social_post.configuration.linkedin.access_token', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['linkedin']['company_page_id'], 'social_post.configuration.linkedin.company_page_id', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['twitter']['consumer_key'], 'social_post.configuration.twitter.consumer_key', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['twitter']['consumer_secret'], 'social_post.configuration.twitter.consumer_secret', $containerBuilder);

@@ -70,7 +70,7 @@ class SocialPostExtension extends Extension
         }
 
         $linkedinConfiguration = $configuration['providers']['linkedin'];
-        $linkedinParameters = ['client_id', 'client_secret', 'company_page_id'];
+        $linkedinParameters = ['client_id', 'client_secret', 'access_token', 'company_page_id'];
         foreach ($linkedinParameters as $parameter) {
             $container->setParameter('social_post.configuration.linkedin.' . $parameter, $linkedinConfiguration[$parameter]);
         }

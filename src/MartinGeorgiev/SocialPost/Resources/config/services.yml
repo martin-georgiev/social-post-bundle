@@ -38,6 +38,7 @@ services:
         class: "%social_post.linkedin.provider%"
         arguments:
             - "@linkedin"
+            - "%social_post.configuration.linkedin.access_token%"
             - "%social_post.configuration.linkedin.company_page_id%"
         public: false
     

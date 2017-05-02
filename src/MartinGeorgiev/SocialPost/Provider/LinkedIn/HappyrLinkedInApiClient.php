@@ -36,10 +36,12 @@ class HappyrLinkedInApiClient implements SocialNetworkPublisher
 
     /**
      * @param LinkedIn $linkedIn Ready to use instance of the Happyr's LinkedIn API client
+     * @param string $accessToken Access token for a user with administrative rights of the page
      * @param string $companyPageId Identifier of the company page, on which the share will be published
      */
-    public function __construct(LinkedIn $linkedIn, string $companyPageId)
+    public function __construct(LinkedIn $linkedIn, string $accessToken, string $companyPageId)
     {
+        $linkedIn->setAccessToken($accessToken);
         $this->linkedIn = $linkedIn;
         $this->pageId = $companyPageId;
     }
@@ -67,7 +69,7 @@ class HappyrLinkedInApiClient implements SocialNetworkPublisher
             $options = ['json' => $this->prepareShare($message)];
             $share = $this->linkedIn->post($publishShareEndpoint, $options);
 
-            return !empty($share['updateKey']);
+            return isset($share['updateKey']) ? !empty($share['updateKey']) : false;
         } catch (Throwable $t) {
             throw new FailureWhenPublishingMessage($t);
         }
