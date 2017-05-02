@@ -43,7 +43,7 @@ class HappyrLinkedInApiClient implements SocialNetworkPublisher
     {
         $linkedIn->setAccessToken($accessToken);
         $this->linkedIn = $linkedIn;
-        $this->pageId = $companyPageId;
+        $this->companyPageId = $companyPageId;
     }
 
     /**
@@ -65,7 +65,7 @@ class HappyrLinkedInApiClient implements SocialNetworkPublisher
         }
 
         try {
-            $publishShareEndpoint = 'v1/companies/' . $this->pageId. '/shares';
+            $publishShareEndpoint = 'v1/companies/' . $this->companyPageId. '/shares';
             $options = ['json' => $this->prepareShare($message)];
             $share = $this->linkedIn->post($publishShareEndpoint, $options);
 
