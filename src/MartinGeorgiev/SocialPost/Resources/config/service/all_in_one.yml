@@ -1,0 +1,6 @@
+parameters:
+    social_post.all_in_one: MartinGeorgiev\SocialPost\Provider\AllInOne
+
+services:
+    social_post:
+        class: "%social_post.all_in_one%"

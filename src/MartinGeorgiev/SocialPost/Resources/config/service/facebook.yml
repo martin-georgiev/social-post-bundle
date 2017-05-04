@@ -1,0 +1,16 @@
+parameters:
+    social_post.facebook.provider: MartinGeorgiev\SocialPost\Provider\Facebook\SDK5
+
+services:
+    facebook:
+        class: Facebook\Facebook
+        arguments:
+            - "%social_post.configuration.facebook%"
+        public: false
+    
+    social_post.facebook:
+        class: "%social_post.facebook.provider%"
+        arguments:
+            - "@facebook"
+            - "%social_post.configuration.facebook.page_id%"
+        public: false
