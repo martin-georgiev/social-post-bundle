@@ -7,7 +7,7 @@ Its constructor takes the same arguments as `SocialNetworkPublisher::publish()` 
     <?php
     //...
     $message = new \MartinGeorgiev\SocialPost\Provider\Message('your test message');
-    $message->setNetworks([SocialNetwork::LINKEDIN, SocialNetwork::TWITTER]);
+    $message->setNetworksToPublishOn([SocialNetwork::LINKEDIN, SocialNetwork::TWITTER]);
     $container->get('social_post')->publish($message);
 
 
