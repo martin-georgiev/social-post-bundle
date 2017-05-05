@@ -29,13 +29,14 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('publish_on')
                     ->requiresAtLeastOneElement()
                     ->prototype('enum')
-                        ->values(['facebook', 'twitter'])
+                        ->values(['facebook', 'linkedin', 'twitter'])
                     ->end()
                 ->end()
             ->end();
 
         $providers = $rootNode->children()->arrayNode('providers');
         $this->addFacebook($providers);
+        $this->addLinkedIn($providers);
         $this->addTwitter($providers);
         
         return $treeBuilder;
@@ -83,6 +84,35 @@ class Configuration implements ConfigurationInterface
                         ->enumNode('http_client_handler')
                             ->values(['curl', 'stream', 'guzzle'])
                             ->defaultValue('curl')
+                        ->end()
+                    ->end()
+            ->end();
+    }
+
+    /**
+     * @param ArrayNodeDefinition $node
+     */
+    private function addLinkedIn(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('linkedin')
+                    ->children()
+                        ->scalarNode('client_id')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                        ->end()
+                        ->scalarNode('client_secret')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                        ->end()
+                        ->scalarNode('access_token')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                        ->end()
+                        ->scalarNode('company_page_id')
+                            ->isRequired()
+                            ->cannotBeEmpty()
                         ->end()
                     ->end()
             ->end();

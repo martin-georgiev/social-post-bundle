@@ -19,28 +19,45 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 class SocialPostExtension extends Extension
 {
     /**
+     * @var array
+     */
+    private $configuration;
+
+    /**
+     * @var ContainerBuilder
+     */
+    private $container;
+
+    /**
+     * @var YamlFileLoader
+     */
+    private $loader;
+
+    /**
      * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = $this->processConfiguration(new Configuration(), $configs);
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
-
-        $container->setParameter('social_post.configuration.publish_on', $configuration['publish_on']);
-
-        $this->setFacebookParameters($configuration, $container);
+        $this->container = $container;
+        $this->loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config/service'));
+        $this->configuration = $this->processConfiguration(new Configuration(), $configs);
         
-        $this->setTwitterParameters($configuration, $container);
+        $this->container->setParameter('social_post.configuration.publish_on', $this->configuration['publish_on']);
+
+        $this->setFacebookParameters();
+        $this->setLinkedInParameters();
+        $this->setTwitterParameters();
+        
+        $this->loader->load('all_in_one.yml');
     }
 
     /**
-     * @param array $configuration
-     * @param ContainerBuilder $container
      * @throws InvalidConfigurationException
      */
-    private function setFacebookParameters(array $configuration, ContainerBuilder $container)
+    private function setFacebookParameters()
     {
+        $configuration = $this->configuration;
+        
         if (!in_array('facebook', $configuration['publish_on'])) {
             return;
         }
@@ -50,17 +67,43 @@ class SocialPostExtension extends Extension
         }
 
         $facebookConfiguration = $configuration['providers']['facebook'];
-        $container->setParameter('social_post.configuration.facebook', $facebookConfiguration);
-        $container->setParameter('social_post.configuration.facebook.page_id', $facebookConfiguration['page_id']);
+        $this->container->setParameter('social_post.configuration.facebook', $facebookConfiguration);
+        $this->container->setParameter('social_post.configuration.facebook.page_id', $facebookConfiguration['page_id']);
+
+        $this->loader->load('facebook.yml');
     }
 
     /**
-     * @param array $configuration
-     * @param ContainerBuilder $container
      * @throws InvalidConfigurationException
      */
-    private function setTwitterParameters(array $configuration, ContainerBuilder $container)
+    private function setLinkedInParameters()
     {
+        $configuration = $this->configuration;
+        
+        if (!in_array('linkedin', $configuration['publish_on'])) {
+            return;
+        }
+
+        if (!isset($configuration['providers']['linkedin'])) {
+            throw new InvalidConfigurationException('Found no configuration for the LinkedIn provider');
+        }
+
+        $linkedinConfiguration = $configuration['providers']['linkedin'];
+        $linkedinParameters = ['client_id', 'client_secret', 'access_token', 'company_page_id'];
+        foreach ($linkedinParameters as $parameter) {
+            $this->container->setParameter('social_post.configuration.linkedin.' . $parameter, $linkedinConfiguration[$parameter]);
+        }
+
+        $this->loader->load('linkedin.yml');
+    }
+
+    /**
+     * @throws InvalidConfigurationException
+     */
+    private function setTwitterParameters()
+    {
+        $configuration = $this->configuration;
+        
         if (!in_array('twitter', $configuration['publish_on'])) {
             return;
         }
@@ -72,7 +115,9 @@ class SocialPostExtension extends Extension
         $twitterConfiguration = $configuration['providers']['twitter'];
         $twitterParameters = ['consumer_key', 'consumer_secret', 'access_token', 'access_token_secret'];
         foreach ($twitterParameters as $parameter) {
-            $container->setParameter('social_post.configuration.twitter.' . $parameter, $twitterConfiguration[$parameter]);
+            $this->container->setParameter('social_post.configuration.twitter.' . $parameter, $twitterConfiguration[$parameter]);
         }
+
+        $this->loader->load('twitter.yml');
     }
 }

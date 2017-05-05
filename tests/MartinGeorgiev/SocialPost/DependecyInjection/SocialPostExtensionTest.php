@@ -15,8 +15,8 @@ use Symfony\Component\Yaml\Parser;
  * @license https://opensource.org/licenses/MIT MIT
  * @link https://github.com/martin-georgiev/social-post-bundle Package's homepage
  * 
- * @covers MartinGeorgiev\SocialPost\DependecyInjection\Configuration
- * @covers MartinGeorgiev\SocialPost\DependecyInjection\SocialPostExtension
+ * @covers MartinGeorgiev\SocialPost\DependencyInjection\Configuration
+ * @covers MartinGeorgiev\SocialPost\DependencyInjection\SocialPostExtension
  */
 class SocialPostExtensionTest extends PHPUnit_Framework_TestCase
 {
@@ -29,7 +29,25 @@ EOF;
         return (new Parser())->parse($yaml);
     }
 
-    private function getConfigurationWithEmptyProvider(): array
+    private function getConfigurationWithEmptyFacebookProvider(): array
+    {
+        $yaml = <<<EOF
+social_post:
+    publish_on: [facebook]
+EOF;
+        return (new Parser())->parse($yaml);
+    }
+
+    private function getConfigurationWithEmptyLinkedInProvider(): array
+    {
+        $yaml = <<<EOF
+social_post:
+    publish_on: [linkedin]
+EOF;
+        return (new Parser())->parse($yaml);
+    }
+
+    private function getConfigurationWithEmptyTwitterProvider(): array
     {
         $yaml = <<<EOF
 social_post:
@@ -42,13 +60,18 @@ EOF;
     {
         $yaml = <<<EOF
 social_post:
-    publish_on: [facebook, twitter]
+    publish_on: [facebook, linkedin, twitter]
     providers:
         facebook:
             app_id: "2017"
             app_secret: "some-secret"
             default_access_token: "some-access-token"
             page_id: "681"
+        linkedin:
+            client_id: "2017"
+            client_secret: "some-secret"
+            access_token: "some-access-token"
+            company_page_id: "1878"
         twitter:
             consumer_key: "some-consumer-key"
             consumer_secret: "some-consumer-secret"
@@ -62,7 +85,7 @@ EOF;
     {
         $yaml = <<<EOF
 social_post:
-    publish_on: [facebook, twitter]
+    publish_on: [facebook, linkedin, twitter]
     providers:
         facebook:
             app_id: "2017"
@@ -74,6 +97,11 @@ social_post:
             persistent_data_handler: "session"
             pseudo_random_string_generator: "mcrypt"
             http_client_handler: "guzzle"
+        linkedin:
+            client_id: "2017"
+            client_secret: "some-secret"
+            access_token: "some-access-token"
+            company_page_id: "1878"
         twitter:
             consumer_key: "some-consumer-key"
             consumer_secret: "some-consumer-secret"
@@ -109,13 +137,31 @@ EOF;
     /**
      * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
-    public function test_will_throw_an_exception_when_no_provider_is_given()
+    public function test_will_throw_an_exception_when_no_facebook_provider_is_given()
     {
         $extension = new SocialPostExtension();
-        $extension->load($this->getConfigurationWithEmptyProvider(), new ContainerBuilder());
+        $extension->load($this->getConfigurationWithEmptyFacebookProvider(), new ContainerBuilder());
     }
 
-    public function test_facebook_defaults_whit_minimal_configuration()
+    /**
+     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     */
+    public function test_will_throw_an_exception_when_no_linkedin_provider_is_given()
+    {
+        $extension = new SocialPostExtension();
+        $extension->load($this->getConfigurationWithEmptyLinkedInProvider(), new ContainerBuilder());
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     */
+    public function test_will_throw_an_exception_when_no_twitter_provider_is_given()
+    {
+        $extension = new SocialPostExtension();
+        $extension->load($this->getConfigurationWithEmptyTwitterProvider(), new ContainerBuilder());
+    }
+
+    public function test_facebook_defaults_with_minimal_configuration()
     {
         $configs = $this->getMinimalConfiguration();
         $containerBuilder = new ContainerBuilder();
@@ -147,6 +193,10 @@ EOF;
         $this->assertContainerParameter($configs['social_post']['publish_on'], 'social_post.configuration.publish_on', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['facebook'], 'social_post.configuration.facebook', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['facebook']['page_id'], 'social_post.configuration.facebook.page_id', $containerBuilder);
+        $this->assertContainerParameter($configs['social_post']['providers']['linkedin']['client_id'], 'social_post.configuration.linkedin.client_id', $containerBuilder);
+        $this->assertContainerParameter($configs['social_post']['providers']['linkedin']['client_secret'], 'social_post.configuration.linkedin.client_secret', $containerBuilder);
+        $this->assertContainerParameter($configs['social_post']['providers']['linkedin']['access_token'], 'social_post.configuration.linkedin.access_token', $containerBuilder);
+        $this->assertContainerParameter($configs['social_post']['providers']['linkedin']['company_page_id'], 'social_post.configuration.linkedin.company_page_id', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['twitter']['consumer_key'], 'social_post.configuration.twitter.consumer_key', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['twitter']['consumer_secret'], 'social_post.configuration.twitter.consumer_secret', $containerBuilder);
         $this->assertContainerParameter($configs['social_post']['providers']['twitter']['access_token'], 'social_post.configuration.twitter.access_token', $containerBuilder);
