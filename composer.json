@@ -1,8 +1,8 @@
 {
     "name": "martin-georgiev/social-post-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony 3 bundle for simultaneous posting of the same message to Facebook, LinkedIn and Twitter",
-    "keywords": ["martin georgiev", "symfony3", "bundle", "facebook", "twitter", "linkedin", "twitteroauth", "facabook sdk for php", "post update", "social network", "php7"],
+    "description": "Symfony bundle for simultaneous posting of the same message to Facebook, LinkedIn and Twitter",
+    "keywords": ["martin georgiev", "symfony3", "symfony4", "bundle", "facebook", "twitter", "linkedin", "twitteroauth", "facabook sdk for php", "post update", "social network", "php7"],
     "minimum-stability": "stable",
     "license": "MIT",
     "authors": [
@@ -14,15 +14,15 @@
     "require": {
         "php": "^7.0",
         "ext-curl": "*",
-        "symfony/framework-bundle": "^3.0",
-        "symfony/yaml": "^3.0",
+        "symfony/framework-bundle": "^3.0|^4.0",
+        "symfony/yaml": "^3.0|^4.0",
         "php-http/curl-client": "^1.7",
         "abraham/twitteroauth": "^0.7",
         "facebook/graph-sdk": "^5.4",
         "happyr/linkedin-api-client": "^1.0"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^3.0",
+        "symfony/phpunit-bridge": "^3.0|^4.0",
         "phpunit/phpunit": "^5.0",
         "squizlabs/php_codesniffer": "*"
     },

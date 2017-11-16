@@ -1,7 +1,23 @@
 language: php
-php:
-  - '7.0'
-  - '7.1'
-install: composer install
+
+matrix:
+  include:
+    - php: 7.0
+      env: SYMFONY_VERSION=^3.0
+    - php: 7.0
+      env: DEPENDENCIES=beta
+    - php: 7.1
+      env: SYMFONY_VERSION=^3.0
+    - php: 7.1
+      env: DEPENDENCIES=beta
+
+
+before_install:
+  # Disable xdebug for improved performance
+  - phpenv config-rm xdebug.ini
+  # Set composer minimum-stability configuration filter to beta versions
+  - if [ "$DEPENDENCIES" = "beta" ]; then perl -pi -e 's/^}$/,"minimum-stability":"beta"}/' composer.json; fi;
+
+before_script: composer install --prefer-dist
 script:
   - composer run-script check-code
