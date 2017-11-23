@@ -7,7 +7,7 @@ Read the [upgrade guide](UPGRADE-GUIDE.md) or [check v1](https://github.com/mart
 
 ----
 ## What's this?
-This is a [Symfony 3](https://www.symfony.com) bundle written in [PHP 7](https://secure.php.net/manual/en/migration70.new-features.php) that provides an easy way for simultaneous publishing to social networks. Currently, it integrates with Facebook, LinkedIn and Twitter.
+This is a [Symfony](https://www.symfony.com) bundle written in [PHP 7](https://secure.php.net/manual/en/migration70.new-features.php) that provides an easy way for simultaneous publishing to social networks. Currently, it integrates with Facebook, LinkedIn and Twitter.
 
 
 ----
