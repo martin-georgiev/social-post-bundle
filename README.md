@@ -66,6 +66,7 @@ Recommended way is through [Composer](https://getcomposer.org/download/)
 
 *Post a test message*
     
+    # Some Symfony container aware class
     <?php
     //...
     $message = new \MartinGeorgiev\SocialPost\Provider\Message('your test message');
