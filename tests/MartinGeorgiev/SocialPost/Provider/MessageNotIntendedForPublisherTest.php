@@ -6,7 +6,7 @@ namespace Tests\MartinGeorgiev\SocialPost\Provider;
 
 use DomainException;
 use MartinGeorgiev\SocialPost\Provider\MessageNotIntendedForPublisher;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @since 2.0.0
@@ -16,7 +16,7 @@ use PHPUnit_Framework_TestCase;
  *
  * @covers MartinGeorgiev\SocialPost\Provider\MessageNotIntendedForPublisher
  */
-class MessageNotIntendedForPublisherTest extends PHPUnit_Framework_TestCase
+class MessageNotIntendedForPublisherTest extends TestCase
 {
     public function test_is_exception()
     {

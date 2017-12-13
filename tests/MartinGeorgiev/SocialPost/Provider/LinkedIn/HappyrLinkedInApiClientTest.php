@@ -8,7 +8,7 @@ use Happyr\LinkedIn\LinkedIn;
 use MartinGeorgiev\SocialPost\Provider\LinkedIn\HappyrLinkedInApiClient;
 use MartinGeorgiev\SocialPost\Provider\Message;
 use MartinGeorgiev\SocialPost\Provider\SocialNetwork;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @since 2.0.0
@@ -18,7 +18,7 @@ use PHPUnit_Framework_TestCase;
  * 
  * @covers MartinGeorgiev\SocialPost\Provider\LinkedIn\HappyrLinkedInApiClient
  */
-class HappyrLinkedInApiClientTest extends PHPUnit_Framework_TestCase
+class HappyrLinkedInApiClientTest extends TestCase
 {
     public function test_can_publish_only_linkedin_intended_messages()
     {

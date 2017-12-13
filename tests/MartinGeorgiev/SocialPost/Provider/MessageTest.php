@@ -6,7 +6,7 @@ namespace Tests\MartinGeorgiev\SocialPost\Provider;
 
 use MartinGeorgiev\SocialPost\Provider\Message;
 use MartinGeorgiev\SocialPost\Provider\SocialNetwork;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @since 2.0.0
@@ -16,7 +16,7 @@ use PHPUnit_Framework_TestCase;
  * 
  * @covers MartinGeorgiev\SocialPost\Provider\Message
  */
-class MessageTest extends PHPUnit_Framework_TestCase
+class MessageTest extends TestCase
 {
     public function test_can_build_new_message()
     {

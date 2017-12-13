@@ -10,7 +10,7 @@ use MartinGeorgiev\SocialPost\Provider\Facebook\SDK5;
 use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingMessage;
 use MartinGeorgiev\SocialPost\Provider\Message;
 use MartinGeorgiev\SocialPost\Provider\Twitter\TwitterOAuth07;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @since 2.0.0
@@ -20,7 +20,7 @@ use PHPUnit_Framework_TestCase;
  * 
  * @covers MartinGeorgiev\SocialPost\Provider\AllInOne
  */
-class AllInOneTest extends PHPUnit_Framework_TestCase
+class AllInOneTest extends TestCase
 {
     public function test_can_publish_any_message()
     {

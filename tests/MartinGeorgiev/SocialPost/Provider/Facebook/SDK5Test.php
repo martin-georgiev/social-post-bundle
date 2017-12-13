@@ -9,7 +9,7 @@ use Facebook\FacebookResponse;
 use MartinGeorgiev\SocialPost\Provider\Facebook\SDK5;
 use MartinGeorgiev\SocialPost\Provider\Message;
 use MartinGeorgiev\SocialPost\Provider\SocialNetwork;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @since 1.0.0
@@ -19,7 +19,7 @@ use PHPUnit_Framework_TestCase;
  * 
  * @covers MartinGeorgiev\SocialPost\Provider\Facebook\SDK5
  */
-class SDK5Test extends PHPUnit_Framework_TestCase
+class SDK5Test extends TestCase
 {
     public function test_can_publish_only_facebook_intended_messages()
     {

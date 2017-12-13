@@ -8,7 +8,7 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 use MartinGeorgiev\SocialPost\Provider\Message;
 use MartinGeorgiev\SocialPost\Provider\SocialNetwork;
 use MartinGeorgiev\SocialPost\Provider\Twitter\TwitterOAuth07;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @since 1.0.0
@@ -18,7 +18,7 @@ use PHPUnit_Framework_TestCase;
  * 
  * @covers MartinGeorgiev\SocialPost\Provider\Twitter\TwitterOAuth07
  */
-class TwitterOAuth07Test extends PHPUnit_Framework_TestCase
+class TwitterOAuth07Test extends TestCase
 {
     public function test_can_publish_only_twitter_intended_messages()
     {
