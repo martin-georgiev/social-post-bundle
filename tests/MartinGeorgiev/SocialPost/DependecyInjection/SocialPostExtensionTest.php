@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\MartinGeorgiev\SocialPost\DependencyInjection;
 
 use MartinGeorgiev\SocialPost\DependencyInjection\SocialPostExtension;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Parser;
 
@@ -18,7 +18,7 @@ use Symfony\Component\Yaml\Parser;
  * @covers MartinGeorgiev\SocialPost\DependencyInjection\Configuration
  * @covers MartinGeorgiev\SocialPost\DependencyInjection\SocialPostExtension
  */
-class SocialPostExtensionTest extends PHPUnit_Framework_TestCase
+class SocialPostExtensionTest extends TestCase
 {
     private function getConfigurationWithEmptyPublishOn(): array
     {

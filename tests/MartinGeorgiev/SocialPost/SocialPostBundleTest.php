@@ -6,7 +6,7 @@ namespace Tests\MartinGeorgiev\SocialPost;
 
 use MartinGeorgiev\SocialPost\DependencyInjection\Compiler\AllInOnePass;
 use MartinGeorgiev\SocialPost\SocialPostBundle;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * 
  * @covers MartinGeorgiev\SocialPost\SocialPostBundle
  */
-class SocialPostBundleTest extends PHPUnit_Framework_TestCase
+class SocialPostBundleTest extends TestCase
 {
     public function test_will_add_compiler_class_for_the_main_AllInOne_service()
     {

@@ -7,7 +7,7 @@ namespace Tests\MartinGeorgiev\SocialPost\Provider;
 use Exception;
 use DomainException;
 use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingMessage;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @since 2.0.0
@@ -17,7 +17,7 @@ use PHPUnit_Framework_TestCase;
  *
  * @covers MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingMessage
  */
-class FailureWhenPublishingMessageTest extends PHPUnit_Framework_TestCase
+class FailureWhenPublishingMessageTest extends TestCase
 {
     public function test_is_exception()
     {
