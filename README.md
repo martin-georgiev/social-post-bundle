@@ -1,7 +1,7 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/martin-georgiev/social-post-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/martin-georgiev/social-post-bundle/?branch=master)
-[![Build Status](https://api.travis-ci.org/martin-georgiev/social-post-bundle.svg?branch=master)](https://api.travis-ci.org/martin-georgiev/social-post-bundle.svg?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/martin-georgiev/social-post-bundle/badges/quality-score.png)](https://scrutinizer-ci.com/g/martin-georgiev/social-post-bundle/)
+[![Build Status](https://api.travis-ci.org/martin-georgiev/social-post-bundle.svg?branch=master)](https://www.travis-ci.org/martin-georgiev/social-post-bundle/branches)
 ----
-## We are now on v2! Upgrading from v1? Looking for older version?
+## Upgrading? Looking for older version?
 Read the [upgrade guide](UPGRADE-GUIDE.md) or [check v1](https://github.com/martin-georgiev/social-post-bundle/releases/tag/1.0.0).
 
 
