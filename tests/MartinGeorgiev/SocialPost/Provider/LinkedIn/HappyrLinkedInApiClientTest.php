@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  * @author Martin Georgiev <martin.georgiev@gmail.com>
  * @license https://opensource.org/licenses/MIT MIT
  * @link https://github.com/martin-georgiev/social-post-bundle Package's homepage
- * 
+ *
  * @covers MartinGeorgiev\SocialPost\Provider\LinkedIn\HappyrLinkedInApiClient
  */
 class HappyrLinkedInApiClientTest extends TestCase
@@ -76,7 +76,7 @@ class HappyrLinkedInApiClientTest extends TestCase
         $linkedInProvider = new HappyrLinkedInApiClient($linkedIn, $accessToken, $companyPageId);
         $linkedInProvider->publish($message);
     }
-    
+
     public function test_can_successfully_publish_a_share()
     {
         $accessToken = 'access-token';
@@ -150,7 +150,7 @@ class HappyrLinkedInApiClientTest extends TestCase
 
         $share = 'test message';
         $message = new Message($share);
-        
+
         $linkedInProvider = new HappyrLinkedInApiClient($linkedIn, $accessToken, $companyPageId);
         $linkedInProvider->publish($message);
     }

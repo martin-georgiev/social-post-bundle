@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  * @author Martin Georgiev <martin.georgiev@gmail.com>
  * @license https://opensource.org/licenses/MIT MIT
  * @link https://github.com/martin-georgiev/social-post-bundle Package's homepage
- * 
+ *
  * @covers MartinGeorgiev\SocialPost\Provider\Twitter\TwitterOAuth07
  */
 class TwitterOAuth07Test extends TestCase
@@ -70,7 +70,7 @@ class TwitterOAuth07Test extends TestCase
         $twitterProvider = new TwitterOAuth07($twitterOAuth);
         $twitterProvider->publish($message);
     }
-    
+
     public function test_can_successfully_publish_a_tweet()
     {
         $twitterOAuth = $this
@@ -81,10 +81,10 @@ class TwitterOAuth07Test extends TestCase
 
         $tweet = 'test tweet';
         $message = new Message($tweet);
-        
+
         $endpoint = 'statuses/update';
         $data = ['status' => $tweet, 'trim_user' => true];
-        $twitterResponse = (object)['id_str' => '2007'];
+        $twitterResponse = (object) ['id_str' => '2007'];
         $twitterOAuth
             ->expects($this->once())
             ->method('post')
@@ -106,11 +106,11 @@ class TwitterOAuth07Test extends TestCase
         $tweet = 'test tweet';
         $link = 'https://www.example.com';
         $message = new Message($tweet, $link);
-        
+
         $endpoint = 'statuses/update';
-        $status = $tweet . ' ' . $link;
+        $status = $tweet.' '.$link;
         $data = ['status' => $status, 'trim_user' => true];
-        $twitterResponse = (object)['id_str' => '2007'];
+        $twitterResponse = (object) ['id_str' => '2007'];
         $twitterOAuth
             ->expects($this->once())
             ->method('post')
@@ -131,10 +131,10 @@ class TwitterOAuth07Test extends TestCase
 
         $tweet = 'test tweet';
         $message = new Message($tweet);
-        
+
         $endpoint = 'statuses/update';
         $data = ['status' => $tweet, 'trim_user' => true];
-        $twitterResponse = (object)['id_str' => ''];
+        $twitterResponse = (object) ['id_str' => ''];
         $twitterOAuth
             ->expects($this->once())
             ->method('post')
@@ -158,7 +158,7 @@ class TwitterOAuth07Test extends TestCase
 
         $tweet = 'test tweet';
         $message = new Message($tweet);
-        
+
         $twitterProvider = new TwitterOAuth07($twitterOAuth);
         $twitterProvider->publish($message);
     }

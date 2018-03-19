@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MartinGeorgiev\SocialPost\Provider;
 
-use MartinGeorgiev\SocialPost\Provider\FailureWhenPublishingMessage;
 use Throwable;
 
 /**
@@ -46,14 +45,14 @@ class AllInOne implements SocialNetworkPublisher
     public function publish(Message $message): bool
     {
         try {
-            $allPublished = (int)true;
+            $allPublished = (int) true;
             foreach ($this->publishers as $publisher) {
                 if ($publisher->canPublish($message)) {
                     $allPublished &= $publisher->publish($message);
                 }
             }
 
-            return (bool)$allPublished;
+            return (bool) $allPublished;
         } catch (Throwable $t) {
             throw new FailureWhenPublishingMessage($t);
         }

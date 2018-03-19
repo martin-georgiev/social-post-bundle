@@ -12,21 +12,21 @@
         }
     ],
     "require": {
-        "php": "^7.0",
+        "php": "^7.0.3",
         "ext-curl": "*",
-        "symfony/framework-bundle": "^3.0|^4.0",
-        "symfony/yaml": "^3.0|^4.0",
-        "php-http/curl-client": "^1.7",
         "abraham/twitteroauth": "^0.7",
         "facebook/graph-sdk": "^5.4",
-        "happyr/linkedin-api-client": "^1.0"
+        "happyr/linkedin-api-client": "^1.0",
+        "php-http/curl-client": "^1.7",
+        "symfony/framework-bundle": "^3.0|^4.0",
+        "symfony/yaml": "^3.0|^4.0"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^3.0|^4.0",
-        "phpunit/phpunit": "^6.0",
-        "squizlabs/php_codesniffer": "*",
+        "friendsofphp/php-cs-fixer": "*",
         "jakub-onderka/php-parallel-lint": "^0.9.2",
-        "roave/security-advisories": "@dev"
+        "phpunit/phpunit": "^6.3",
+        "sensiolabs/security-checker": "^4.1",
+        "symfony/phpunit-bridge": "^3.0|^4.0"
     },
     "autoload": {
         "psr-4": {
@@ -35,13 +35,21 @@
         }
     },
     "scripts": {
-        "check-code": [
-            "vendor/bin/phpunit",
-            "vendor/bin/phpcs --standard=PSR2 --encoding=utf-8 --colors -n src",
-            "vendor/jakub-onderka/php-parallel-lint/parallel-lint --exclude vendor ."
+        "check-code-style": [
+            "vendor/bin/php-cs-fixer fix --config='./.php_cs' --show-progress=none --dry-run --no-interaction -v"
         ],
-        "fix-code": [
-            "vendor/bin/phpcbf --standard=PSR2 --encoding=utf-8 -n src"
+        "fix-code-style": [
+            "vendor/bin/php-cs-fixer fix --config='./.php_cs' --show-progress=none --no-interaction -v"
+        ],
+        "run-tests": [
+            "vendor/bin/phpunit"
+        ],
+        "validate-files": [
+            "vendor/bin/parallel-lint --exclude vendor ."
         ]
-    }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true
 }

@@ -43,6 +43,7 @@ class TwitterOAuth07 implements SocialNetworkPublisher
     public function canPublish(Message $message): bool
     {
         $canPublish = !empty(array_intersect($message->getNetworksToPublishOn(), [SocialNetwork::ANY, SocialNetwork::TWITTER]));
+
         return $canPublish;
     }
 
@@ -76,7 +77,7 @@ class TwitterOAuth07 implements SocialNetworkPublisher
         if (filter_var($message->getLink(), FILTER_VALIDATE_URL) !== false) {
             $linkIsNotIncludedInTheStatus = mb_strpos($status, $message->getLink()) === false;
             if ($linkIsNotIncludedInTheStatus) {
-                $status .= ' ' . $message->getLink();
+                $status .= ' '.$message->getLink();
             }
         }
 

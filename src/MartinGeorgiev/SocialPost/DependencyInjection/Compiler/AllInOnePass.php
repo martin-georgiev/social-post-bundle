@@ -25,9 +25,9 @@ class AllInOnePass implements CompilerPassInterface
         $definition = $container->getDefinition('social_post');
         $publishOn = $container->getParameter('social_post.configuration.publish_on');
         foreach ($publishOn as $provider) {
-            $serviceName = 'social_post.' . $provider;
+            $serviceName = 'social_post.'.$provider;
             if (!$container->has($serviceName)) {
-                throw new OutOfBoundsException('Cannot find service ' . $serviceName . ' when injecting dependecies for "social_post"');
+                throw new OutOfBoundsException(sprintf('Cannot find service %s when injecting dependecies for "social_post"', $serviceName));
             }
             $definition->addArgument(new Reference($serviceName));
         }

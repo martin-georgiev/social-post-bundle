@@ -14,7 +14,7 @@ use Symfony\Component\Yaml\Parser;
  * @author Martin Georgiev <martin.georgiev@gmail.com>
  * @license https://opensource.org/licenses/MIT MIT
  * @link https://github.com/martin-georgiev/social-post-bundle Package's homepage
- * 
+ *
  * @covers MartinGeorgiev\SocialPost\DependencyInjection\Configuration
  * @covers MartinGeorgiev\SocialPost\DependencyInjection\SocialPostExtension
  */
@@ -26,6 +26,7 @@ class SocialPostExtensionTest extends TestCase
 social_post:
     publish_on: []
 EOF;
+
         return (new Parser())->parse($yaml);
     }
 
@@ -35,6 +36,7 @@ EOF;
 social_post:
     publish_on: [facebook]
 EOF;
+
         return (new Parser())->parse($yaml);
     }
 
@@ -44,6 +46,7 @@ EOF;
 social_post:
     publish_on: [linkedin]
 EOF;
+
         return (new Parser())->parse($yaml);
     }
 
@@ -53,6 +56,7 @@ EOF;
 social_post:
     publish_on: [twitter]
 EOF;
+
         return (new Parser())->parse($yaml);
     }
 
@@ -78,6 +82,7 @@ social_post:
             access_token: "some-access-token"
             access_token_secret: "some-access-token-secret"
 EOF;
+
         return (new Parser())->parse($yaml);
     }
 
@@ -108,6 +113,7 @@ social_post:
             access_token: "some-access-token"
             access_token_secret: "some-access-token-secret"
 EOF;
+
         return (new Parser())->parse($yaml);
     }
 
@@ -182,7 +188,7 @@ EOF;
 
         $this->assertContainerParameter($facebookConfigurationWithDefaults, 'social_post.configuration.facebook', $containerBuilder);
     }
-    
+
     public function test_complete_configuration()
     {
         $configs = $this->getCompleteConfiguration();

@@ -52,6 +52,7 @@ class HappyrLinkedInApiClient implements SocialNetworkPublisher
     public function canPublish(Message $message): bool
     {
         $canPublish = !empty(array_intersect($message->getNetworksToPublishOn(), [SocialNetwork::ANY, SocialNetwork::LINKEDIN]));
+
         return $canPublish;
     }
 
@@ -65,7 +66,7 @@ class HappyrLinkedInApiClient implements SocialNetworkPublisher
         }
 
         try {
-            $publishShareEndpoint = 'v1/companies/' . $this->companyPageId. '/shares';
+            $publishShareEndpoint = 'v1/companies/'.$this->companyPageId.'/shares';
             $options = ['json' => $this->prepareShare($message)];
             $share = $this->linkedIn->post($publishShareEndpoint, $options);
 

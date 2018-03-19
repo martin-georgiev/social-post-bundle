@@ -109,10 +109,10 @@ class Message
     /**
      * @return Message
      */
-    public function setNetworksToPublishOn(array $networksToPublishOn): Message
+    public function setNetworksToPublishOn(array $networksToPublishOn): self
     {
         $this->networksToPublishOn = $networksToPublishOn;
-        
+
         return $this;
     }
 

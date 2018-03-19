@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  * @author Martin Georgiev <martin.georgiev@gmail.com>
  * @license https://opensource.org/licenses/MIT MIT
  * @link https://github.com/martin-georgiev/social-post-bundle Package's homepage
- * 
+ *
  * @covers MartinGeorgiev\SocialPost\Provider\Message
  */
 class MessageTest extends TestCase

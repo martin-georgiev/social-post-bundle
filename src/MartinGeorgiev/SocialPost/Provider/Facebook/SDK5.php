@@ -50,6 +50,7 @@ class SDK5 implements SocialNetworkPublisher
     public function canPublish(Message $message): bool
     {
         $canPublish = !empty(array_intersect($message->getNetworksToPublishOn(), [SocialNetwork::ANY, SocialNetwork::FACEBOOK]));
+
         return $canPublish;
     }
 
@@ -63,7 +64,7 @@ class SDK5 implements SocialNetworkPublisher
         }
 
         try {
-            $publishPostEndpoint = '/' . $this->pageId. '/feed';
+            $publishPostEndpoint = '/'.$this->pageId.'/feed';
             $response = $this->facebook->post(
                 $publishPostEndpoint,
                 $this->prepareParams($message)
@@ -83,7 +84,7 @@ class SDK5 implements SocialNetworkPublisher
     protected function prepareParams(Message $message): array
     {
         $params = [];
-        
+
         $params['message'] = $message->getMessage();
 
         if (filter_var($message->getLink(), FILTER_VALIDATE_URL) !== false) {

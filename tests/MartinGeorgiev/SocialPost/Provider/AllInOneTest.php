@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  * @author Martin Georgiev <martin.georgiev@gmail.com>
  * @license https://opensource.org/licenses/MIT MIT
  * @link https://github.com/martin-georgiev/social-post-bundle Package's homepage
- * 
+ *
  * @covers MartinGeorgiev\SocialPost\Provider\AllInOne
  */
 class AllInOneTest extends TestCase
@@ -71,7 +71,7 @@ class AllInOneTest extends TestCase
     {
         $socialPost = 'test message';
         $message = new Message($socialPost);
-        
+
         $facebook = $this
             ->getMockBuilder(SDK5::class)
             ->disableOriginalConstructor()

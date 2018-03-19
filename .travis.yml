@@ -1,10 +1,24 @@
 language: php
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+env:
+  global:
+    - DEPENDENCIES=no
+
 matrix:
   include:
     - php: 7.0
       env: SYMFONY_VERSION=^3.0
     - php: 7.0
+      env: SYMFONY_VERSION=^4.0
+    - php: 7.0
+      env: SYMFONY_VERSION=dev-master
+    - php: 7.0
+      env: DEPENDENCIES=low
+    - php: 7.0
       env: DEPENDENCIES=beta
     - php: 7.1
       env: SYMFONY_VERSION=^3.0
@@ -13,6 +27,8 @@ matrix:
     - php: 7.1
       env: SYMFONY_VERSION=dev-master
     - php: 7.1
+      env: DEPENDENCIES=low
+    - php: 7.1
       env: DEPENDENCIES=beta
     - php: 7.2
       env: SYMFONY_VERSION=^3.0
@@ -21,6 +37,8 @@ matrix:
     - php: 7.2
       env: SYMFONY_VERSION=dev-master
     - php: 7.2
+      env: DEPENDENCIES=low
+    - php: 7.2
       env: DEPENDENCIES=beta
     - php: nightly
       env: SYMFONY_VERSION=^3.0
@@ -28,19 +46,31 @@ matrix:
       env: SYMFONY_VERSION=^4.0
     - php: nightly
       env: SYMFONY_VERSION=dev-master
+    - php: nightly
+      env: DEPENDENCIES=low
     - php: nightly
       env: DEPENDENCIES=beta
   allow_failures:
-    - env: SYMFONY_VERSION=dev-master
-    - env: DEPENDENCIES=beta
     - php: nightly
+    - env: DEPENDENCIES=beta
+    - env: DEPENDENCIES=low
+    - env: SYMFONY_VERSION=dev-master
 
 before_install:
-  # Disable xdebug for improved performance
-  - phpenv config-rm xdebug.ini
+  - composer self-update
   # Set composer minimum-stability configuration filter to beta versions
   - if [ "$DEPENDENCIES" = "beta" ]; then perl -pi -e 's/^}$/,"minimum-stability":"beta"}/' composer.json; fi;
+  # Disable xdebug, there is no use of it being enabled
+  - mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini{,.disabled} || echo "xdebug not available"
+  # Prevent Travis throwing an out of memory error
+  - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  # Test if we have a token for github as the project may hit the 60 rph limit
+  - if [ -n "$GH_TOKEN" ]; then composer config github-oauth.github.com ${GH_TOKEN}; fi;
 
-before_script: composer install --prefer-dist
+install:
+  - if [ "$DEPENDENCIES" = "low" ]; then composer --prefer-lowest --prefer-stable update; else composer update; fi;
+
 script:
-  - composer run-script check-code
+  - composer validate-files
+  - composer check-code-style
+  - composer run-tests

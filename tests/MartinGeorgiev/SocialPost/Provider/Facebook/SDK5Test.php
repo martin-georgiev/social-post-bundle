@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  * @author Martin Georgiev <martin.georgiev@gmail.com>
  * @license https://opensource.org/licenses/MIT MIT
  * @link https://github.com/martin-georgiev/social-post-bundle Package's homepage
- * 
+ *
  * @covers MartinGeorgiev\SocialPost\Provider\Facebook\SDK5
  */
 class SDK5Test extends TestCase
@@ -29,7 +29,7 @@ class SDK5Test extends TestCase
             ->disableOriginalConstructor()
             ->setMethods()
             ->getMock();
-        
+
         $statusUpdate = 'test message';
         $message = new Message($statusUpdate);
         $message->setNetworksToPublishOn([SocialNetwork::FACEBOOK]);
@@ -74,7 +74,7 @@ class SDK5Test extends TestCase
         $facebookProvider = new SDK5($facebook, $pageId);
         $facebookProvider->publish($message);
     }
-    
+
     public function test_can_successfully_publish_as_a_page()
     {
         $pageId = '2009';
@@ -85,7 +85,7 @@ class SDK5Test extends TestCase
             ->disableOriginalConstructor()
             ->setMethods(['getGraphNode'])
             ->getMock();
-        
+
         $post = ['id' => '2013'];
         $facebookResponse
             ->expects($this->once())
@@ -119,7 +119,7 @@ class SDK5Test extends TestCase
     {
         $pageId = '2009';
         $endpoint = sprintf('/%s/feed', $pageId);
-        
+
         $facebookResponse = $this
             ->getMockBuilder(FacebookResponse::class)
             ->disableOriginalConstructor()
@@ -137,7 +137,7 @@ class SDK5Test extends TestCase
             ->disableOriginalConstructor()
             ->setMethods(['post'])
             ->getMock();
-        
+
         $statusUpdate = 'test status update';
         $message = new Message($statusUpdate);
         $data = ['message' => $statusUpdate];
@@ -162,7 +162,7 @@ class SDK5Test extends TestCase
             ->disableOriginalConstructor()
             ->setMethods()
             ->getMock();
-        
+
         $statusUpdate = 'test status update';
         $message = new Message($statusUpdate);
 
