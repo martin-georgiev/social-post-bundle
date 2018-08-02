@@ -52,7 +52,6 @@ install:
     elif [ "$SYMFONY_VERSION" != "" ]; then
       composer remove symfony/symfony --dev &&
       composer require symfony/symfony:"${SYMFONY_VERSION}" --dev --no-update;
-    fi
     else
       composer update -n --prefer-dist;
     fi;
