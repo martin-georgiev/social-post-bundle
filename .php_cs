@@ -12,6 +12,7 @@ return PhpCsFixer\Config::create()
             '@PSR2' => true,
             '@PHP56Migration' => true,
             '@PHP70Migration' => true,
+            '@PHP71Migration' => true,
             '@DoctrineAnnotation' => true,
             'array_syntax' => ['syntax' => 'short'],
             'binary_operator_spaces' => true,

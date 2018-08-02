@@ -2,21 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Tests\MartinGeorgiev\SocialPost\DependencyInjection;
+namespace MartinGeorgiev\Tests\SocialPostBundle\DependencyInjection;
 
-use MartinGeorgiev\SocialPost\DependencyInjection\SocialPostExtension;
+use MartinGeorgiev\SocialPostBundle\DependencyInjection\SocialPostExtension;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Parser;
 
 /**
  * @since 1.0.0
- * @author Martin Georgiev <martin.georgiev@gmail.com>
- * @license https://opensource.org/licenses/MIT MIT
- * @link https://github.com/martin-georgiev/social-post-bundle Package's homepage
- *
- * @covers MartinGeorgiev\SocialPost\DependencyInjection\Configuration
- * @covers MartinGeorgiev\SocialPost\DependencyInjection\SocialPostExtension
+ * @license https://opensource.org/licenses/MIT
+ * @link https://github.com/martin-georgiev/social-post-bundle
  */
 class SocialPostExtensionTest extends TestCase
 {
@@ -119,10 +116,8 @@ EOF;
 
     /**
      * @param mixed $expectedParameterValue
-     * @param string $containerParameter
-     * @param ContainerBuilder $containerBuilder
      */
-    private function assertContainerParameter($expectedParameterValue, string $containerParameter, ContainerBuilder $containerBuilder)
+    private function assertContainerParameter($expectedParameterValue, string $containerParameter, ContainerBuilder $containerBuilder): void
     {
         $this->assertSame(
             $expectedParameterValue,
@@ -132,42 +127,49 @@ EOF;
     }
 
     /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     * @test
      */
-    public function test_will_throw_an_exception_when_no_value_for_publish_on()
+    public function will_throw_an_exception_when_no_value_for_publish_on()
     {
+        $this->expectException(InvalidConfigurationException::class);
         $extension = new SocialPostExtension();
         $extension->load($this->getConfigurationWithEmptyPublishOn(), new ContainerBuilder());
     }
 
     /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     * @test
      */
-    public function test_will_throw_an_exception_when_no_facebook_provider_is_given()
+    public function will_throw_an_exception_when_no_facebook_provider_is_given()
     {
+        $this->expectException(InvalidConfigurationException::class);
         $extension = new SocialPostExtension();
         $extension->load($this->getConfigurationWithEmptyFacebookProvider(), new ContainerBuilder());
     }
 
     /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     * @test
      */
-    public function test_will_throw_an_exception_when_no_linkedin_provider_is_given()
+    public function will_throw_an_exception_when_no_linkedin_provider_is_given()
     {
+        $this->expectException(InvalidConfigurationException::class);
         $extension = new SocialPostExtension();
         $extension->load($this->getConfigurationWithEmptyLinkedInProvider(), new ContainerBuilder());
     }
 
     /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     * @test
      */
-    public function test_will_throw_an_exception_when_no_twitter_provider_is_given()
+    public function will_throw_an_exception_when_no_twitter_provider_is_given()
     {
+        $this->expectException(InvalidConfigurationException::class);
         $extension = new SocialPostExtension();
         $extension->load($this->getConfigurationWithEmptyTwitterProvider(), new ContainerBuilder());
     }
 
-    public function test_facebook_defaults_with_minimal_configuration()
+    /**
+     * @test
+     */
+    public function facebook_defaults_with_minimal_configuration()
     {
         $configs = $this->getMinimalConfiguration();
         $containerBuilder = new ContainerBuilder();
@@ -189,7 +191,10 @@ EOF;
         $this->assertContainerParameter($facebookConfigurationWithDefaults, 'social_post.configuration.facebook', $containerBuilder);
     }
 
-    public function test_complete_configuration()
+    /**
+     * @test
+     */
+    public function complete_configuration()
     {
         $configs = $this->getCompleteConfiguration();
         $containerBuilder = new ContainerBuilder();

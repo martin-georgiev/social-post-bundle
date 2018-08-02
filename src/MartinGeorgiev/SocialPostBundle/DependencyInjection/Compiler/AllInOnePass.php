@@ -2,32 +2,33 @@
 
 declare(strict_types=1);
 
-namespace MartinGeorgiev\SocialPost\DependencyInjection\Compiler;
+namespace MartinGeorgiev\SocialPostBundle\DependencyInjection\Compiler;
 
+use MartinGeorgiev\SocialPost\Publisher;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Exception\OutOfBoundsException;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * @since 1.0.0
- * @author Martin Georgiev <martin.georgiev@gmail.com>
- * @license https://opensource.org/licenses/MIT MIT
- * @link https://github.com/martin-georgiev/social-post-bundle Package's homepage
+ * @license https://opensource.org/licenses/MIT
+ * @link https://github.com/martin-georgiev/social-post-bundle
  */
 class AllInOnePass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $definition = $container->getDefinition('social_post');
         $publishOn = $container->getParameter('social_post.configuration.publish_on');
         foreach ($publishOn as $provider) {
             $serviceName = 'social_post.'.$provider;
             if (!$container->has($serviceName)) {
-                throw new OutOfBoundsException(sprintf('Cannot find service %s when injecting dependecies for "social_post"', $serviceName));
+                throw new OutOfBoundsException(sprintf('Cannot find service %s when injecting dependencies for "social_post"', $serviceName));
+            }
+            if (!$container->get($serviceName) instanceof Publisher) {
+                throw new InvalidArgumentException(sprintf('Service %s should be an instance of %s', $serviceName, Publisher::class));
             }
             $definition->addArgument(new Reference($serviceName));
         }

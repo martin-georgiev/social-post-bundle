@@ -1,5 +1,7 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/martin-georgiev/social-post-bundle/badges/quality-score.png)](https://scrutinizer-ci.com/g/martin-georgiev/social-post-bundle/)
-[![Build Status](https://api.travis-ci.org/martin-georgiev/social-post-bundle.svg?branch=master)](https://www.travis-ci.org/martin-georgiev/social-post-bundle/branches)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/martin-georgiev/social-post-bundle/badges/quality-score.png)](https://scrutinizer-ci.com/g/martin-georgiev/social-post-bundle/?branch=master)
+[![Build Status](https://api.travis-ci.org/martin-georgiev/social-post-bundle.svg?branch=master)](https://www.travis-ci.org/martin-georgiev/social-post-bundle)
+[![Latest Stable Version](https://poser.pugx.org/martin-georgiev/social-post-bundle/version)](https://packagist.org/packages/martin-georgiev/social-post-bundle)
+[![Total Downloads](https://poser.pugx.org/martin-georgiev/social-post-bundle/downloads)](https://packagist.org/packages/martin-georgiev/social-post-bundle)
 ----
 ## Upgrading? Looking for older version?
 Read the [upgrade guide](UPGRADE-GUIDE.md) or [check v1](https://github.com/martin-georgiev/social-post-bundle/releases/tag/1.0.0).
@@ -7,7 +9,7 @@ Read the [upgrade guide](UPGRADE-GUIDE.md) or [check v1](https://github.com/mart
 
 ----
 ## What's this?
-This is a [Symfony](https://www.symfony.com) bundle written in [PHP 7](https://secure.php.net/manual/en/migration70.new-features.php) that provides an easy way for simultaneous publishing to social networks. Currently, it integrates with Facebook, LinkedIn and Twitter.
+This is a [Symfony](https://www.symfony.com) bundle written in [PHP 7.1](https://secure.php.net/manual/en/migration71.new-features.php) that wrappes [martin-georgiev/social-post](https://github.com/martin-georgiev/social-post) - an easy way for simultaneous publishing to multiple social networks. Currently, it integrates with Facebook, LinkedIn and Twitter.
 
 
 ----
@@ -57,7 +59,7 @@ Recommended way is through [Composer](https://getcomposer.org/download/)
         {
             $bundles = [
                 // ...
-                new \MartinGeorgiev\SocialPost\SocialPostBundle(),
+                new \MartinGeorgiev\SocialPostBundle\SocialPostBundle(),
             ];
             return $bundles;
         }
@@ -69,15 +71,15 @@ Recommended way is through [Composer](https://getcomposer.org/download/)
     # Some Symfony container aware class
     <?php
     //...
-    $message = new \MartinGeorgiev\SocialPost\Provider\Message('your test message');
+    $message = new \MartinGeorgiev\SocialPost\Message('your test message');
     $container->get('social_post')->publish($message);
     
-__Important!__ When publishing on Twitter only the values for `$message` and `$link` arguments (of the `Message` instance) will be used. This is due to Twitter's limited features for tweet customisation.
-
 ----
 ## Additional help
-Facebook doesn't support non-expiring user access tokens. Instead, you can obtain a permanent page access token. When using such tokens you can act and post as the page itself. More information about the page access tokens from the official [Facebook documentation](https://developers.facebook.com/docs/facebook-login/access-tokens/expiration-and-extension#extendingpagetokens). Some Stackoverflow answers ([here](https://stackoverflow.com/a/21927690/3425372) and [here](https://stackoverflow.com/a/28418469/3425372)) also prove to be helpful. 
+Twitter has limited features for tweet customisation. This means that for tweets only `message` and `link` values (`\MartinGeorgiev\SocialPost\Message` instance) will be used.
+
+Facebook doesn't support non-expiring user access tokens. Instead, you can obtain a permanent page access token. When using such tokens you can act and post as the page itself. More information about the page access tokens from the official [Facebook documentation](https://developers.facebook.com/docs/facebook-login/access-tokens/expiration-and-extension#extendingpagetokens). Some Stackoverflow answers ([here](https://stackoverflow.com/a/21927690/3425372) and [here](https://stackoverflow.com/a/28418469/3425372)) also can of help. 
 
 ----
 ## License
-This package is licensed under the MIT License. Please, respect that!
+This package is licensed under the MIT License.
