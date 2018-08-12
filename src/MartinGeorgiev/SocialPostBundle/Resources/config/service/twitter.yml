@@ -1,0 +1,19 @@
+parameters:
+    social_post.twitter.provider: MartinGeorgiev\SocialPost\SocialNetwork\Twitter\TwitterOAuth07
+
+services:
+    _defaults:
+        public: false
+
+    twitter:
+        class: Abraham\TwitterOAuth\TwitterOAuth
+        arguments:
+            $consumerKey: "%social_post.configuration.twitter.consumer_key%"
+            $consumerSecret: "%social_post.configuration.twitter.consumer_secret%"
+            $oauthToken: "%social_post.configuration.twitter.access_token%"
+            $oauthTokenSecret: "%social_post.configuration.twitter.access_token_secret%"
+
+    social_post.twitter:
+        class: "%social_post.twitter.provider%"
+        arguments:
+            $twitter: "@twitter"

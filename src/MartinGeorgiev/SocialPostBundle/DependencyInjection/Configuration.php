@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MartinGeorgiev\SocialPost\DependencyInjection;
+namespace MartinGeorgiev\SocialPostBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -10,16 +10,12 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * @since 1.0.0
- * @author Martin Georgiev <martin.georgiev@gmail.com>
- * @license https://opensource.org/licenses/MIT MIT
- * @link https://github.com/martin-georgiev/social-post-bundle Package's homepage
+ * @license https://opensource.org/licenses/MIT
+ * @link https://github.com/martin-georgiev/social-post-bundle
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('social_post');
@@ -42,10 +38,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addFacebook(ArrayNodeDefinition $node)
+    private function addFacebook(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -89,10 +82,7 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addLinkedIn(ArrayNodeDefinition $node)
+    private function addLinkedIn(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -118,10 +108,7 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addTwitter(ArrayNodeDefinition $node)
+    private function addTwitter(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
