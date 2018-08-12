@@ -1,5 +1,5 @@
 parameters:
-    social_post.all_in_one: MartinGeorgiev\SocialPost\Provider\AllInOne
+    social_post.all_in_one: MartinGeorgiev\SocialPost\SocialNetwork\AllInOne
 
 services:
     social_post:

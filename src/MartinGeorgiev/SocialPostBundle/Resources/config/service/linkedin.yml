@@ -1,0 +1,19 @@
+parameters:
+    social_post.linkedin.provider: MartinGeorgiev\SocialPost\SocialNetwork\LinkedIn\HappyrLinkedInApiClient
+
+services:
+    _defaults:
+        public: false
+
+    linkedin:
+        class: Happyr\LinkedIn\LinkedIn
+        arguments:
+            $appId: "%social_post.configuration.linkedin.client_id%"
+            $appSecret: "%social_post.configuration.linkedin.client_secret%"
+
+    social_post.linkedin:
+        class: "%social_post.linkedin.provider%"
+        arguments:
+            $linkedIn: "@linkedin"
+            $accessToken: "%social_post.configuration.linkedin.access_token%"
+            $companyPageId: "%social_post.configuration.linkedin.company_page_id%"

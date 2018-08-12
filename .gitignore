@@ -1,2 +1,5 @@
-vendor
+bin
 docs/tests/coverage
+vendor
+
+composer.lock
