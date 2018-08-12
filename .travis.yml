@@ -76,4 +76,4 @@ script:
   - composer run-tests-with-clover
 
 after_script:
-  - php bin/coveralls -v
+  - bin/coveralls -v
