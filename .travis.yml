@@ -76,4 +76,8 @@ script:
   - composer run-tests-with-clover
 
 after_script:
-  - bin/coveralls -v
+  - if [ "$(phpenv version-name)" != "$LATEST_PHP_VERSION" ]; then
+      echo "Coveralls report is skipped for older PHP versions";
+    else
+      bin/php-coveralls -v;
+    fi;
