@@ -73,7 +73,12 @@ script:
     else
       composer check-security;
     fi;
-  - composer run-tests-with-clover
+  - if [ "$(phpenv version-name)" != "$LATEST_PHP_VERSION" ]; then
+      echo "Tests with reporting in Clover format are skipped for older PHP versions";
+      composer run-tests;
+    else
+      composer run-tests-with-clover
+    fi;
 
 after_script:
   - if [ "$(phpenv version-name)" != "$LATEST_PHP_VERSION" ]; then
