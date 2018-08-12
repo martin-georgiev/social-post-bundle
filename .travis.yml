@@ -42,6 +42,7 @@ before_install:
   - if [ -n "$GH_TOKEN" ]; then
       composer config github-oauth.github.com ${GH_TOKEN};
     fi;
+  - mkdir -p build/logs
 
 install:
   - if [ "$DEPENDENCIES" = "beta" ]; then
@@ -72,4 +73,7 @@ script:
     else
       composer check-security;
     fi;
-  - composer run-tests
+  - composer run-tests-with-clover
+
+after_script:
+  - php bin/coveralls -v

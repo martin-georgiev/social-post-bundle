@@ -34,6 +34,7 @@
         "friendsofphp/php-cs-fixer": "*",
         "jakub-onderka/php-parallel-lint": "^1.0",
         "phpstan/phpstan": "^0.10.2",
+        "phpstan/phpstan-phpunit": "^0.10.0",
         "phpunit/phpunit": "^7.2",
         "sensiolabs/security-checker": "^4.1",
         "symfony/phpunit-bridge": "^3.0|^4.0"
@@ -58,6 +59,9 @@
         ],
         "run-tests": [
             "bin/phpunit"
+        ],
+        "run-tests-with-clover": [
+            "bin/phpunit --coverage-clover build/logs/clover.xml"
         ],
         "validate-files": [
             "bin/parallel-lint --exclude vendor --exclude bin ."
