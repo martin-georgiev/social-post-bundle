@@ -77,7 +77,7 @@ script:
       echo "Tests with reporting in Clover format are skipped for older PHP versions";
       composer run-tests;
     else
-      composer run-tests-with-clover
+      composer run-tests-with-clover;
     fi;
 
 after_script:
