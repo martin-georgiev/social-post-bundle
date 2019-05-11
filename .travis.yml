@@ -9,18 +9,15 @@ cache:
 php:
   - 7.1
   - 7.2
+  - 7.3
   - nightly
 
 env:
   global:
-    - LATEST_PHP_VERSION="7.2"
-    - MAINTAINED_SYMFONY_VERSIONS="2.8.*|3.4.*|4.0.*|4.1.*|4.2.*"
+    - LATEST_PHP_VERSION="7.3"
+    - MAINTAINED_SYMFONY_VERSIONS="2.8.*|3.4.*|4.1.*|4.2.*"
   matrix:
     - SYMFONY_VERSION="2.8.*"
-    - SYMFONY_VERSION="3.0.*"
-    - SYMFONY_VERSION="3.1.*"
-    - SYMFONY_VERSION="3.2.*"
-    - SYMFONY_VERSION="3.3.*"
     - SYMFONY_VERSION="3.4.*"
     - SYMFONY_VERSION="4.0.*"
     - SYMFONY_VERSION="4.1.*"
@@ -46,6 +43,9 @@ before_install:
   - mkdir -p build/logs
 
 install:
+  - if [ "$(phpenv version-name)" != "$LATEST_PHP_VERSION" ]; then
+      composer remove friendsofphp/php-cs-fixer phpstan/phpstan phpstan/phpstan-phpunit --dev;
+    fi
   - if [ "$DEPENDENCIES" = "beta" ]; then
       composer config minimum-stability beta;
       composer update -n --prefer-dist;
@@ -63,6 +63,11 @@ script:
       echo "File validation is skipped for older PHP versions";
     else
       composer validate-files;
+    fi;
+  - if [ "$(phpenv version-name)" != "$LATEST_PHP_VERSION" ]; then
+      echo "Static analysis is skipped for older PHP versions";
+    else
+      composer run-static-analysis-including-tests;
     fi;
   - if [ "$(phpenv version-name)" != "$LATEST_PHP_VERSION" ]; then
       echo "Code style check is skipped for older PHP versions";
