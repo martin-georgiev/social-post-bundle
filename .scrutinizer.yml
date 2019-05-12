@@ -1,3 +1,7 @@
+build:
+  environment:
+    php: 7.3
+
 coding_style:
   php:
     spaces:

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MartinGeorgiev\Tests\SocialPostBundle;
+namespace Tests\MartinGeorgiev\SocialPostBundle;
 
 use MartinGeorgiev\SocialPostBundle\DependencyInjection\Compiler\AllInOnePass;
 use MartinGeorgiev\SocialPostBundle\SocialPostBundle;
