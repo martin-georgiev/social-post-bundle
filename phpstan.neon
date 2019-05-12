@@ -1,2 +1,12 @@
 includes:
-  - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+
+parameters:
+    autoload_directories:
+        - %rootDir%/../../../src
+        - %rootDir%/../../../tests
+
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Cannot call method scalarNode() on Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface|null#'
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children().#'

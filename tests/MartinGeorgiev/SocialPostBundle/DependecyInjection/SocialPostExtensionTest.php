@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MartinGeorgiev\Tests\SocialPostBundle\DependencyInjection;
+namespace Tests\MartinGeorgiev\SocialPostBundle\DependencyInjection;
 
 use MartinGeorgiev\SocialPostBundle\DependencyInjection\SocialPostExtension;
 use PHPUnit\Framework\TestCase;
