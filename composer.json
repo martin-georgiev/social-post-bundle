@@ -27,7 +27,7 @@
     "require": {
         "php": "^7.1",
         "martin-georgiev/social-post": "^1.0",
-        "symfony/framework-bundle": "^3.0|^4.0",
+        "symfony/framework-bundle": "^3.0|^4.1.12",
         "symfony/yaml": "^3.0|^4.0"
     },
     "require-dev": {
