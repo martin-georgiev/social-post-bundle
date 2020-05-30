@@ -38,6 +38,7 @@
         "phpunit/phpunit": "^8.5",
         "sensiolabs-de/deptrac-shim": "^0.7.1",
         "sensiolabs/security-checker": "^6.0",
+        "slam/phpstan-extensions": "^5.0",
         "symfony/phpunit-bridge": "^3.0|^4.0"
     },
 
