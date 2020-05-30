@@ -11,15 +11,17 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @since 1.0.0
+ *
  * @license https://opensource.org/licenses/MIT
- * @link https://github.com/martin-georgiev/social-post-bundle
+ *
+ * @see https://github.com/martin-georgiev/social-post-bundle
  */
 class SocialPostBundleTest extends TestCase
 {
     /**
      * @test
      */
-    public function will_add_compiler_class_for_the_main_AllInOne_service()
+    public function will_add_compiler_class_for_the_main_all_in_one_service(): void
     {
         $compilerPass = new AllInOnePass();
         $containerBuilder = $this->createMock(ContainerBuilder::class);

@@ -10,15 +10,17 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * @since 1.0.0
+ *
  * @license https://opensource.org/licenses/MIT
- * @link https://github.com/martin-georgiev/social-post-bundle
+ *
+ * @see https://github.com/martin-georgiev/social-post-bundle
  */
 class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('social_post');
-        if (method_exists($treeBuilder, 'getRootNode')) {
+        if (\method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
         } else {
             $rootNode = $treeBuilder->root('social_post');

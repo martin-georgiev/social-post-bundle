@@ -1,0 +1,18 @@
+paths:
+  - ./src
+  - ./tests
+
+layers:
+  - name: Bundle
+    collectors:
+      - type: className
+        regex: \\MartinGeorgiev\\SocialPostBundle\\.*
+  - name: Tests
+    collectors:
+      - type: className
+        regex: \\Tests\\MartinGeorgiev\\SocialPostBundle\\.*
+
+ruleset:
+  Bundle: ~
+  Tests:
+    - Bundle
