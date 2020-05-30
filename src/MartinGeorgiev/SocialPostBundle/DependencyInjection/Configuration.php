@@ -19,11 +19,12 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('social_post');
-        if (\method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
+        if ($this->isBeforeSymfony4()) {
+            $treeBuilder = new TreeBuilder();
             $rootNode = $treeBuilder->root('social_post');
+        } else {
+            $treeBuilder = new TreeBuilder('social_post');
+            $rootNode = $treeBuilder->getRootNode();
         }
 
         $rootNode
@@ -42,6 +43,11 @@ class Configuration implements ConfigurationInterface
         $this->addTwitter($providers);
 
         return $treeBuilder;
+    }
+
+    private function isBeforeSymfony4(): bool
+    {
+        return !\method_exists(TreeBuilder::class, 'getRootNode');
     }
 
     private function addFacebook(ArrayNodeDefinition $node): void
