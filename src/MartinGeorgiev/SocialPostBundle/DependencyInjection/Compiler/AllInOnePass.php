@@ -13,8 +13,10 @@ use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * @since 1.0.0
+ *
  * @license https://opensource.org/licenses/MIT
- * @link https://github.com/martin-georgiev/social-post-bundle
+ *
+ * @see https://github.com/martin-georgiev/social-post-bundle
  */
 class AllInOnePass implements CompilerPassInterface
 {
@@ -25,10 +27,10 @@ class AllInOnePass implements CompilerPassInterface
         foreach ($publishOn as $provider) {
             $serviceName = 'social_post.'.$provider;
             if (!$container->has($serviceName)) {
-                throw new OutOfBoundsException(sprintf('Cannot find service %s when injecting dependencies for "social_post"', $serviceName));
+                throw new OutOfBoundsException(\sprintf('Cannot find service %s when injecting dependencies for "social_post"', $serviceName));
             }
             if (!$container->get($serviceName) instanceof Publisher) {
-                throw new InvalidArgumentException(sprintf('Service %s should be an instance of %s', $serviceName, Publisher::class));
+                throw new InvalidArgumentException(\sprintf('Service %s should be an instance of %s', $serviceName, Publisher::class));
             }
             $definition->addArgument(new Reference($serviceName));
         }
