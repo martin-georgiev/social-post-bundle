@@ -44,23 +44,23 @@
 
     "scripts": {
         "check-code-style": [
-            "bin/php-cs-fixer fix --config='./ci/php-cs-fixer/config.php' --show-progress=none --dry-run --no-interaction --diff -v"
+            "php-cs-fixer fix --config='./ci/php-cs-fixer/config.php' --show-progress=none --dry-run --no-interaction --diff -v"
         ],
         "check-security": [
-            "bin/security-checker security:check"
+            "security-checker security:check"
         ],
         "fix-code-style": [
-            "bin/php-cs-fixer fix --config='./ci/php-cs-fixer/config.php' --show-progress=none --no-interaction --diff -v"
+            "php-cs-fixer fix --config='./ci/php-cs-fixer/config.php' --show-progress=none --no-interaction --diff -v"
         ],
         "run-static-analysis": [
-            "bin/phpstan analyse --configuration='./ci/phpstan/config.neon' --level=8 src/ tests/",
-            "bin/deptrac analyze './ci/deptrac/config.yml' --no-interaction --no-progress"
+            "phpstan analyse --configuration='./ci/phpstan/config.neon' --no-progress --level=8 src/ tests/",
+            "deptrac analyze './ci/deptrac/config.yml' --no-interaction --no-progress"
         ],
         "run-tests": [
-            "bin/phpunit --configuration='./ci/phpunit/config.xml'"
+            "phpunit --configuration='./ci/phpunit/config.xml'"
         ],
         "run-tests-with-clover": [
-            "bin/phpunit --configuration='./ci/phpunit/config.xml' --coverage-clover './build/logs/clover.xml'"
+            "phpunit --configuration='./ci/phpunit/config.xml' --coverage-clover './build/logs/clover.xml'"
         ]
     },
 
