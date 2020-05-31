@@ -34,7 +34,7 @@
         "friendsofphp/php-cs-fixer": "^2.16",
         "php-coveralls/php-coveralls": "^2.2",
         "phpstan/phpstan": "^0.12",
-        "phpstan/phpstan-phpunit": "^0.12",
+        "phpstan/phpstan-phpunit": "^0.12.10",
         "phpunit/phpunit": "^8.5",
         "sensiolabs-de/deptrac-shim": "^0.7.1",
         "sensiolabs/security-checker": "^6.0",

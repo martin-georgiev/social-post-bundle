@@ -6,7 +6,6 @@ namespace Tests\MartinGeorgiev\SocialPostBundle;
 
 use MartinGeorgiev\SocialPostBundle\DependencyInjection\Compiler\AllInOnePass;
 use MartinGeorgiev\SocialPostBundle\SocialPostBundle;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -25,7 +24,6 @@ class SocialPostBundleTest extends TestCase
     public function will_add_compiler_class_for_the_main_all_in_one_service(): void
     {
         $compilerPass = new AllInOnePass();
-        /** @var ContainerBuilder&MockObject $containerBuilder */
         $containerBuilder = $this->createMock(ContainerBuilder::class);
         $containerBuilder
             ->expects($this->once())
