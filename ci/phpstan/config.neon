@@ -1,0 +1,15 @@
+includes:
+    - %rootDir%/../../../vendor/phpstan/phpstan-phpunit/extension.neon
+    - %rootDir%/../../../vendor/slam/phpstan-extensions/conf/slam-rules.neon
+    - %rootDir%/../../../vendor/slam/phpstan-extensions/conf/symfony-rules.neon
+
+parameters:
+    checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    inferPrivatePropertyTypeFromConstructor: true
+
+    ignoreErrors:
+        - '#Cannot call method scalarNode() on Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface|null#'
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children().#'
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder::root().#'
+        - '#Class Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder constructor invoked with 0 parameters, 1-3 required.#'

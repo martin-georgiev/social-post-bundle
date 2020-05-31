@@ -12,8 +12,10 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * @since 1.0.0
+ *
  * @license https://opensource.org/licenses/MIT
- * @link https://github.com/martin-georgiev/social-post-bundle
+ *
+ * @see https://github.com/martin-georgiev/social-post-bundle
  */
 class SocialPostExtension extends Extension
 {
@@ -54,7 +56,7 @@ class SocialPostExtension extends Extension
     {
         $configuration = $this->configuration;
 
-        if (!in_array('facebook', $configuration['publish_on'], true)) {
+        if (!\in_array('facebook', $configuration['publish_on'], true)) {
             return;
         }
 
@@ -76,7 +78,7 @@ class SocialPostExtension extends Extension
     {
         $configuration = $this->configuration;
 
-        if (!in_array('linkedin', $configuration['publish_on'], true)) {
+        if (!\in_array('linkedin', $configuration['publish_on'], true)) {
             return;
         }
 
@@ -100,7 +102,7 @@ class SocialPostExtension extends Extension
     {
         $configuration = $this->configuration;
 
-        if (!in_array('twitter', $configuration['publish_on'], true)) {
+        if (!\in_array('twitter', $configuration['publish_on'], true)) {
             return;
         }
 

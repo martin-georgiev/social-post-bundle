@@ -12,14 +12,16 @@ use Symfony\Component\Yaml\Parser;
 
 /**
  * @since 1.0.0
- * @license https://opensource.org/licenses/MIT
- * @link https://github.com/martin-georgiev/social-post-bundle
+ *
+ * @license https://opensource.org/licenses/MITs
+ *
+ * @see https://github.com/martin-georgiev/social-post-bundle
  */
 class SocialPostExtensionTest extends TestCase
 {
     private function getConfigurationWithEmptyPublishOn(): array
     {
-        $yaml = <<<EOF
+        $yaml = <<<'EOF'
 social_post:
     publish_on: []
 EOF;
@@ -29,7 +31,7 @@ EOF;
 
     private function getConfigurationWithEmptyFacebookProvider(): array
     {
-        $yaml = <<<EOF
+        $yaml = <<<'EOF'
 social_post:
     publish_on: [facebook]
 EOF;
@@ -39,7 +41,7 @@ EOF;
 
     private function getConfigurationWithEmptyLinkedInProvider(): array
     {
-        $yaml = <<<EOF
+        $yaml = <<<'EOF'
 social_post:
     publish_on: [linkedin]
 EOF;
@@ -49,7 +51,7 @@ EOF;
 
     private function getConfigurationWithEmptyTwitterProvider(): array
     {
-        $yaml = <<<EOF
+        $yaml = <<<'EOF'
 social_post:
     publish_on: [twitter]
 EOF;
@@ -59,7 +61,7 @@ EOF;
 
     private function getMinimalConfiguration(): array
     {
-        $yaml = <<<EOF
+        $yaml = <<<'EOF'
 social_post:
     publish_on: [facebook, linkedin, twitter]
     providers:
@@ -85,7 +87,7 @@ EOF;
 
     private function getCompleteConfiguration(): array
     {
-        $yaml = <<<EOF
+        $yaml = <<<'EOF'
 social_post:
     publish_on: [facebook, linkedin, twitter]
     providers:
@@ -122,14 +124,14 @@ EOF;
         $this->assertSame(
             $expectedParameterValue,
             $containerBuilder->getParameter($containerParameter),
-            sprintf('%s parameter is correct', $containerParameter)
+            \sprintf('%s parameter is correct', $containerParameter)
         );
     }
 
     /**
      * @test
      */
-    public function will_throw_an_exception_when_no_value_for_publish_on()
+    public function will_throw_an_exception_when_no_value_for_publish_on(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $extension = new SocialPostExtension();
@@ -139,7 +141,7 @@ EOF;
     /**
      * @test
      */
-    public function will_throw_an_exception_when_no_facebook_provider_is_given()
+    public function will_throw_an_exception_when_no_facebook_provider_is_given(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $extension = new SocialPostExtension();
@@ -149,7 +151,7 @@ EOF;
     /**
      * @test
      */
-    public function will_throw_an_exception_when_no_linkedin_provider_is_given()
+    public function will_throw_an_exception_when_no_linkedin_provider_is_given(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $extension = new SocialPostExtension();
@@ -159,7 +161,7 @@ EOF;
     /**
      * @test
      */
-    public function will_throw_an_exception_when_no_twitter_provider_is_given()
+    public function will_throw_an_exception_when_no_twitter_provider_is_given(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $extension = new SocialPostExtension();
@@ -169,7 +171,7 @@ EOF;
     /**
      * @test
      */
-    public function facebook_defaults_with_minimal_configuration()
+    public function facebook_defaults_with_minimal_configuration(): void
     {
         $configs = $this->getMinimalConfiguration();
         $containerBuilder = new ContainerBuilder();
@@ -194,7 +196,7 @@ EOF;
     /**
      * @test
      */
-    public function complete_configuration()
+    public function complete_configuration(): void
     {
         $configs = $this->getCompleteConfiguration();
         $containerBuilder = new ContainerBuilder();

@@ -10,8 +10,10 @@ use Symfony\Component\HttpKernel\Bundle\Bundle as BaseBundle;
 
 /**
  * @since 1.0.0
+ *
  * @license https://opensource.org/licenses/MIT
- * @link https://github.com/martin-georgiev/social-post-bundle
+ *
+ * @see https://github.com/martin-georgiev/social-post-bundle
  */
 class SocialPostBundle extends BaseBundle
 {
