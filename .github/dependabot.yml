@@ -1,0 +1,15 @@
+version: 2
+updates:
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: sensiolabs-de/deptrac-shim
+    versions:
+    - 0.10.2
+    - 0.10.3
+    - 0.11.0.1
+    - 0.11.1
+    - 0.12.0
